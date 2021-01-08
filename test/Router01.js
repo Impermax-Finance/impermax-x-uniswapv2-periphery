@@ -59,7 +59,7 @@ let ETH_IS_A;
 const MAX_UINT_256 = (new BN(2)).pow(new BN(256)).sub(new BN(1));
 const INITIAL_EXCHANGE_RATE = oneMantissa;
 const MINIMUM_LIQUIDITY = new BN(1000);
-const DEADLINE = new BN(2236063525); //year 2040
+const DEADLINE = MAX_UINT_256;
 
 const permitGenerator = {
 	//Note: activatePermit is false by default. If you want to test the permit you need to configure mnemonic with the one of your ganache wallet
@@ -440,14 +440,12 @@ contract('Router01', function (accounts) {
 	it('callee is forbidden to non-borrowable', async () => {
 		// Fails because data cannot be empty
 		await expectRevert.unspecified(router.impermaxBorrow(router.address, address(0), '0', '0x'));
-		await expectRevert.unspecified(router.impermaxLiquidate(router.address, address(0), '0', '0x'));
 		const data = encode(
 			['uint8', 'address', 'uint8', 'bytes'],
 			[0, uniswapV2Pair.address, 0, '0x']
 		);
 		// Fails becasue msg.sender is not a borrowable
 		await expectRevert(router.impermaxBorrow(router.address, address(0), '0', data), 'ImpermaxRouter: UNAUTHORIZED_CALLER');
-		await expectRevert(router.impermaxLiquidate(router.address, address(0), '0', data), 'ImpermaxRouter: UNAUTHORIZED_CALLER');
 		// Fails because sender is not the router
 		const borrowableA = ETH_IS_A ? borrowableWETH : borrowableUNI;
 		await expectRevert(borrowableA.borrow(borrower, router.address, '0', data), 'ImpermaxRouter: SENDER_NOT_ROUTER');

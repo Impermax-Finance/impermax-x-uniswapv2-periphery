@@ -176,7 +176,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 	) external virtual override ensure(deadline) returns (uint amount, uint seizeTokens) {
 		amount = _repayAmount(borrowable, amountMax, borrower);
 		TransferHelper.safeTransferFrom(IBorrowable(borrowable).underlying(), msg.sender, borrowable, amount);
-		seizeTokens = IBorrowable(borrowable).liquidate(borrower, to, amount, new bytes(0));
+		seizeTokens = IBorrowable(borrowable).liquidate(borrower, to);
 	}
 	function liquidateETH(
 		address borrowable, 
@@ -187,7 +187,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		amountETH = _repayAmount(borrowable, msg.value, borrower);
 		IWETH(WETH).deposit{value: amountETH}();
 		assert(IWETH(WETH).transfer(borrowable, amountETH));
-		seizeTokens = IBorrowable(borrowable).liquidate(borrower, to, amountETH, new bytes(0));
+		seizeTokens = IBorrowable(borrowable).liquidate(borrower, to);
 		// refund surpluss eth, if any
 		if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);
 	}
@@ -280,7 +280,8 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		bytes data;
 	}
 	
-	function _callee(address sender, bytes memory data) internal virtual {
+	function impermaxBorrow(address sender, address borrower, uint borrowAmount, bytes calldata data) external virtual override {
+		borrower; borrowAmount;
 		CalleeData memory calleeData = abi.decode(data, (CalleeData));
 		// only succeeds if called by a borrowable and if that borrowable has been called by the router
 		require(sender == address(this), "ImpermaxRouter: SENDER_NOT_ROUTER");
@@ -297,13 +298,9 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		}
 		else revert();
 	}
-	function impermaxBorrow(address sender, address borrower, uint borrowAmount, bytes calldata data) external virtual override {
-		borrower; borrowAmount;
-		_callee(sender, data);
-	}
-	function impermaxLiquidate(address sender, address borrower, uint repayAmount, bytes calldata data) external virtual override {
-		borrower; repayAmount;
-		_callee(sender, data);
+	
+	function impermaxRedeem(address sender, uint redeemAmount, bytes calldata data) external virtual override {
+		sender; redeemAmount; data;
 	}
 		
 	/*** Utilities ***/
@@ -368,7 +365,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"ff",
 			bDeployer,
 			keccak256(abi.encodePacked(factory, uniswapV2Pair, index)),
-			hex"cfb224d4e917b5004e396310f6a654421defcf94c20d9800aa0dd2048b47c017" // Borrowable bytecode keccak256
+			hex"ae4280f2558f430e545f8498139b445a825e8fe028a70f62e6b60b7baf4b0541" // Borrowable bytecode keccak256
 		))));
 	}
 	function _getCollateral(address uniswapV2Pair) public virtual view returns (address collateral) {
@@ -376,7 +373,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"ff",
 			cDeployer,
 			keccak256(abi.encodePacked(factory, uniswapV2Pair)),
-			hex"be370b6d1c8c4594feca05c9cd57348064883592ba196d65f7924f1f804a2c51" // Collateral bytecode keccak256
+			hex"8fd6557eefe21959c5e4ea83e5892bb580f170a6e305c19c468c80369546b110" // Collateral bytecode keccak256
 		))));
 	}
 	function _getLendingPool(address uniswapV2Pair) public virtual view returns (address collateral, address borrowableA, address borrowableB) {
