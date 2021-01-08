@@ -200,7 +200,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		uint amountB,
 		address to
 	) internal virtual {
-		address borrowableA = _getBorrowable(uniswapV2Pair, 0);
+		address borrowableA = getBorrowable(uniswapV2Pair, 0);
 		// mint collateral
 		bytes memory borrowBData = abi.encode(CalleeData({
 			callType: CallType.ADD_LIQUIDITY_AND_MINT,
@@ -238,8 +238,8 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		bytes calldata permitDataA,
 		bytes calldata permitDataB
 	) external virtual override ensure(deadline) {
-		_borrowPermit(_getBorrowable(uniswapV2Pair, 0), amountADesired, deadline, permitDataA);
-		_borrowPermit(_getBorrowable(uniswapV2Pair, 1), amountBDesired, deadline, permitDataB);
+		_borrowPermit(getBorrowable(uniswapV2Pair, 0), amountADesired, deadline, permitDataA);
+		_borrowPermit(getBorrowable(uniswapV2Pair, 1), amountBDesired, deadline, permitDataB);
 		(uint amountA, uint amountB) = _optimalLiquidity(uniswapV2Pair, amountADesired, amountBDesired, amountAMin, amountBMin);
 		_leverage(uniswapV2Pair, amountA, amountB, to);
 	}
@@ -250,7 +250,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		uint amountB,
 		address to
 	) internal virtual {
-		(address collateral, address borrowableA, address borrowableB) = _getLendingPool(uniswapV2Pair);
+		(address collateral, address borrowableA, address borrowableB) = getLendingPool(uniswapV2Pair);
 		// add liquidity to uniswap pair
 		TransferHelper.safeTransfer(IBorrowable(borrowableA).underlying(), uniswapV2Pair, amountA);
 		TransferHelper.safeTransfer(IBorrowable(borrowableB).underlying(), uniswapV2Pair, amountB);
@@ -285,7 +285,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		CalleeData memory calleeData = abi.decode(data, (CalleeData));
 		// only succeeds if called by a borrowable and if that borrowable has been called by the router
 		require(sender == address(this), "ImpermaxRouter: SENDER_NOT_ROUTER");
-		address declaredCaller = _getBorrowable(calleeData.uniswapV2Pair, calleeData.borrowableIndex);
+		address declaredCaller = getBorrowable(calleeData.uniswapV2Pair, calleeData.borrowableIndex);
 		require(msg.sender == declaredCaller, "ImpermaxRouter: UNAUTHORIZED_CALLER");
 		if (calleeData.callType == CallType.ADD_LIQUIDITY_AND_MINT) {
 			AddLiquidityAndMintCalldata memory d = abi.decode(calleeData.data, (AddLiquidityAndMintCalldata));
@@ -293,7 +293,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		}
 		else if (calleeData.callType == CallType.BORROWB) {
 			BorrowBCalldata memory d = abi.decode(calleeData.data, (BorrowBCalldata));
-			address borrowableB = _getBorrowable(calleeData.uniswapV2Pair, 1);
+			address borrowableB = getBorrowable(calleeData.uniswapV2Pair, 1);
 			IBorrowable(borrowableB).borrow(d.borrower, d.receiver, d.borrowAmount, d.data);
 		}
 		else revert();
@@ -359,7 +359,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		}
 	}
 	
-	function _getBorrowable(address uniswapV2Pair, uint8 index) public virtual view returns (address borrowable) {
+	function getBorrowable(address uniswapV2Pair, uint8 index) public virtual override view returns (address borrowable) {
 		require(index < 2, "ImpermaxRouter: INDEX_TOO_HIGH");
 		borrowable = address(uint(keccak256(abi.encodePacked(
 			hex"ff",
@@ -368,7 +368,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"ae4280f2558f430e545f8498139b445a825e8fe028a70f62e6b60b7baf4b0541" // Borrowable bytecode keccak256
 		))));
 	}
-	function _getCollateral(address uniswapV2Pair) public virtual view returns (address collateral) {
+	function getCollateral(address uniswapV2Pair) public virtual override view returns (address collateral) {
 		collateral = address(uint(keccak256(abi.encodePacked(
 			hex"ff",
 			cDeployer,
@@ -376,9 +376,9 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"8fd6557eefe21959c5e4ea83e5892bb580f170a6e305c19c468c80369546b110" // Collateral bytecode keccak256
 		))));
 	}
-	function _getLendingPool(address uniswapV2Pair) public virtual view returns (address collateral, address borrowableA, address borrowableB) {
-		collateral = _getCollateral(uniswapV2Pair);
-		borrowableA = _getBorrowable(uniswapV2Pair, 0);
-		borrowableB = _getBorrowable(uniswapV2Pair, 1);
+	function getLendingPool(address uniswapV2Pair) public virtual override view returns (address collateral, address borrowableA, address borrowableB) {
+		collateral = getCollateral(uniswapV2Pair);
+		borrowableA = getBorrowable(uniswapV2Pair, 0);
+		borrowableB = getBorrowable(uniswapV2Pair, 1);
 	}
 }

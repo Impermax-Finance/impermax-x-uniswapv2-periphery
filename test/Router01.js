@@ -454,18 +454,18 @@ contract('Router01', function (accounts) {
 	it('address calculation', async () => {
 		//console.log(keccak256(Collateral.bytecode));
 		//console.log(keccak256(Borrowable.bytecode));
-		//console.log(await router._getLendingPool(uniswapV2Pair.address));
+		//console.log(await router.getLendingPool(uniswapV2Pair.address));
 		const expectedBorrowableA = ETH_IS_A ? borrowableWETH.address : borrowableUNI.address;
 		const expectedBorrowableB = ETH_IS_A ? borrowableUNI.address : borrowableWETH.address;
 		const expectedCollateral = collateral.address;
-		expect(await router._getBorrowable(uniswapV2Pair.address, '0')).to.eq(expectedBorrowableA);
-		expect(await router._getBorrowable(uniswapV2Pair.address, '1')).to.eq(expectedBorrowableB);
-		expect(await router._getCollateral(uniswapV2Pair.address)).to.eq(expectedCollateral);
-		const lendingPool = await router._getLendingPool(uniswapV2Pair.address);
+		expect(await router.getBorrowable(uniswapV2Pair.address, '0')).to.eq(expectedBorrowableA);
+		expect(await router.getBorrowable(uniswapV2Pair.address, '1')).to.eq(expectedBorrowableB);
+		expect(await router.getCollateral(uniswapV2Pair.address)).to.eq(expectedCollateral);
+		const lendingPool = await router.getLendingPool(uniswapV2Pair.address);
 		expect(lendingPool.borrowableA).to.eq(expectedBorrowableA);
 		expect(lendingPool.borrowableB).to.eq(expectedBorrowableB);
 		expect(lendingPool.collateral).to.eq(expectedCollateral);
-		const receipt = await router._getBorrowable.sendTransaction(uniswapV2Pair.address, '0');
+		const receipt = await router.getBorrowable.sendTransaction(uniswapV2Pair.address, '0');
 		//console.log(receipt.receipt.gasUsed); // costs around 1800
 	});
 	
