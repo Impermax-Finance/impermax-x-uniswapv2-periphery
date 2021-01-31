@@ -78,7 +78,7 @@ contract('Router01', function (accounts) {
 		simpleUniswapOracle = await SimpleUniswapOracle.new();
 		const bDeployer = await BDeployer.new();
 		const cDeployer = await CDeployer.new();
-		impermaxFactory = await Factory.new(address(0), bDeployer.address, cDeployer.address, uniswapV2Factory.address, simpleUniswapOracle.address);
+		impermaxFactory = await Factory.new(address(0), address(0), bDeployer.address, cDeployer.address, uniswapV2Factory.address, simpleUniswapOracle.address);
 		WETH = await WETH9.new();
 		UNI = await MockERC20.new('Uniswap', 'UNI');
 		const uniswapV2PairAddress = await uniswapV2Factory.createPair.call(WETH.address, UNI.address);
