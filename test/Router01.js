@@ -12,9 +12,14 @@ const {
 	encode,
 } = require('./Utils/Ethereum');
 const {
-	getPermit,
+	getAmounts,
+	leverage,
+	permitGenerator,
 } = require('./Utils/ImpermaxPeriphery');
 const { keccak256, toUtf8Bytes } = require('ethers/utils');
+
+const MAX_UINT_256 = (new BN(2)).pow(new BN(256)).sub(new BN(1));
+const DEADLINE = MAX_UINT_256;
 
 const MockERC20 = artifacts.require('MockERC20');
 const UniswapV2Factory = artifacts.require('UniswapV2Factory');
@@ -56,50 +61,8 @@ const MAX_APPROVE_ETH_AMOUNT = oneMantissa.mul(new BN(6)).div(new BN(100));
 
 let LP_AMOUNT;
 let ETH_IS_A;
-const MAX_UINT_256 = (new BN(2)).pow(new BN(256)).sub(new BN(1));
 const INITIAL_EXCHANGE_RATE = oneMantissa;
 const MINIMUM_LIQUIDITY = new BN(1000);
-const DEADLINE = MAX_UINT_256;
-
-const permitGenerator = {
-	//Note: activatePermit is false by default. If you want to test the permit you need to configure mnemonic with the one of your ganache wallet
-	activatePermit: true,
-	mnemonic: 'artist rigid narrow swallow catch attend pulp victory drift outside prepare tribe',
-	PKs: [],
-	initialize: async () => {
-		if (!permitGenerator.activatePermit) return;
-		const { mnemonicToSeed } = require('bip39');
-		const { hdkey } = require('ethereumjs-wallet');
-		const seed = await mnemonicToSeed(permitGenerator.mnemonic);
-		const hdk = hdkey.fromMasterSeed(seed);
-		for (i = 0; i < 10; i++) {
-			const borrowerWallet = hdk.derivePath("m/44'/60'/0'/0/"+i).getWallet();
-			permitGenerator.PKs[borrowerWallet.getAddressString().toLowerCase()] = borrowerWallet.getPrivateKey();
-		}
-	},
-	_permit: async (token, owner, spender, value, deadline, borrowPermit) => {
-		if (permitGenerator.activatePermit) {
-			const {v, r, s} = await getPermit({
-				token, owner, spender, value, deadline, private_key: permitGenerator.PKs[owner.toLowerCase()], borrowPermit
-			});
-			return encode (
-				['bool', 'uint8', 'bytes32', 'bytes32'],
-				[value.eq(MAX_UINT_256), v, r, s]
-			);
-		}
-		else {
-			if (borrowPermit) await token.borrowApprove(spender, value, {from: owner});
-			else await token.approve(spender, value, {from: owner});
-			return '0x';
-		}
-	},
-	permit: async (token, owner, spender, value, deadline) => {
-		return await permitGenerator._permit(token, owner, spender, value, deadline, false);
-	},
-	borrowPermit: async (token, owner, spender, value, deadline) => {
-		return await permitGenerator._permit(token, owner, spender, value, deadline, true);
-	},
-}
 
 async function checkETHBalance(operation, user, expectedChange, negative = false) {
 	const balancePrior = await web3.eth.getBalance(user)
@@ -115,32 +78,6 @@ async function checkETHBalance(operation, user, expectedChange, negative = false
 		const expected = bnMantissa((expectedChange*1 - gasUsed*1) / 1e18);
 		expectAlmostEqualMantissa(balanceDiff, expected);
 	}
-}
-
-function getAmounts(amount0Desired, amount1Desired, amount0Min, amount1Min, A_IS_0) {
-	return {
-		amountADesired: A_IS_0 ? amount0Desired : amount1Desired,
-		amountBDesired: A_IS_0 ? amount1Desired : amount0Desired,
-		amountAMin: A_IS_0 ? amount0Min : amount1Min,
-		amountBMin: A_IS_0 ? amount1Min : amount0Min,	
-	};
-}
-function leverage(router, uniswapV2Pair, borrower, amount0Desired, amount1Desired, amount0Min, amount1Min, permitData0, permitData1, A_IS_0) {
-	const t = getAmounts(amount0Desired, amount1Desired, amount0Min, amount1Min, A_IS_0);
-	const permitDataA = A_IS_0 ? permitData0 : permitData1;
-	const permitDataB = A_IS_0 ? permitData1 : permitData0;
-	return router.leverage(
-		uniswapV2Pair.address, 
-		t.amountADesired, 
-		t.amountBDesired, 
-		t.amountAMin, 
-		t.amountBMin, 
-		borrower, 
-		DEADLINE, 
-		permitDataA, 
-		permitDataB, 
-		{from: borrower}
-	);
 }
 
 contract('Router01', function (accounts) {
@@ -192,8 +129,8 @@ contract('Router01', function (accounts) {
 		ETH_IS_A = await borrowable0.underlying() == WETH.address;
 		if (ETH_IS_A) [borrowableWETH, borrowableUNI] = [borrowable0, borrowable1];
 		else [borrowableWETH, borrowableUNI] = [borrowable1, borrowable0]
-		await increaseTime(3700); // wait for oracle to be ready
 		router = await Router01.new(impermaxFactory.address, bDeployer.address, cDeployer.address, WETH.address);
+		await increaseTime(3700); // wait for oracle to be ready
 		await permitGenerator.initialize();
 	});
 
@@ -409,7 +346,7 @@ contract('Router01', function (accounts) {
 		expect(liquidateUNIResult.seizeTokens * 1).to.be.gt(0);
 		expect(borrowerBalance0.sub(borrowerBalance1) * 1).to.eq(liquidatorBalance1.sub(liquidatorBalance0) * 1);
 		expectAlmostEqualMantissa(borrowerBalance0.sub(borrowerBalance1), liquidateUNIResult.seizeTokens);
-				
+		
 		// Liquidate ETH
 		const ETHBorrowedPrior = await borrowableWETH.borrowBalance(borrower);
 		await expectRevert(router.liquidateETH(borrowableUNI.address, borrower, liquidator, DEADLINE, {value: ETH_LIQUIDATE_AMOUNT, from: liquidator}),"ImpermaxRouter: NOT_WETH");
@@ -437,7 +374,7 @@ contract('Router01', function (accounts) {
 		await checkETHBalance(op2, liquidator, expectedETHAmount, true);
 	});
 	
-	it('callee is forbidden to non-borrowable', async () => {
+	it('impermaxBorrow is forbidden to non-borrowable', async () => {
 		// Fails because data cannot be empty
 		await expectRevert.unspecified(router.impermaxBorrow(router.address, address(0), '0', '0x'));
 		const data = encode(
@@ -449,6 +386,19 @@ contract('Router01', function (accounts) {
 		// Fails because sender is not the router
 		const borrowableA = ETH_IS_A ? borrowableWETH : borrowableUNI;
 		await expectRevert(borrowableA.borrow(borrower, router.address, '0', data), 'ImpermaxRouter: SENDER_NOT_ROUTER');
+	});
+	
+	it('impermaxRedeem is forbidden to non-collateral', async () => {
+		// Fails because data cannot be empty
+		await expectRevert.unspecified(router.impermaxRedeem(router.address, '0', '0x'));
+		const data = encode(
+			['uint8', 'address', 'uint8', 'bytes'],
+			[0, uniswapV2Pair.address, 0, '0x']
+		);
+		// Fails becasue msg.sender is not a borrowable
+		await expectRevert(router.impermaxRedeem(router.address, '0', data), 'ImpermaxRouter: UNAUTHORIZED_CALLER');
+		// Fails because sender is not the router
+		await expectRevert(collateral.flashRedeem(router.address, '0', data), 'ImpermaxRouter: SENDER_NOT_ROUTER');
 	});
 	
 	it('address calculation', async () => {

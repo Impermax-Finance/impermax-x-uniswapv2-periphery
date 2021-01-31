@@ -14,6 +14,7 @@ import "./libraries/TransferHelper.sol";
 import "./libraries/UniswapV2Library.sol";
 
 contract Router01 is IRouter01, IImpermaxCallee {
+	using SafeMath for uint;
 
 	address public immutable override factory;
 	address public immutable override bDeployer;
@@ -259,9 +260,84 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		ICollateral(collateral).mint(to);
 	}
 		
+	/*** Deleverage LP Token ***/
+	
+	function deleverage(
+		address uniswapV2Pair,  
+		uint redeemTokens,
+		uint amountAMin,
+		uint amountBMin,
+		uint deadline,
+		bytes calldata permitData
+	) external virtual override ensure(deadline) {
+		address collateral = getCollateral(uniswapV2Pair);
+		uint exchangeRate = ICollateral(collateral).exchangeRate();
+		require(redeemTokens > 0, "ImpermaxRouter: REDEEM_ZERO");		
+		uint redeemAmount = (redeemTokens - 1).mul(exchangeRate).div(1e18);
+		_permit(collateral, redeemTokens, deadline, permitData);
+		bytes memory redeemData = abi.encode(CalleeData({
+			callType: CallType.REMOVE_LIQ_AND_REPAY,
+			uniswapV2Pair: uniswapV2Pair,
+			borrowableIndex: 0,
+			data: abi.encode(RemoveLiqAndRepayCalldata({
+				borrower: msg.sender,
+				redeemTokens: redeemTokens,
+				redeemAmount: redeemAmount,
+				amountAMin: amountAMin,
+				amountBMin: amountBMin
+			}))
+		}));
+		// flashRedeem
+		ICollateral(collateral).flashRedeem(address(this), redeemAmount, redeemData);
+	}
+
+	function _removeLiqAndRepay(
+		address uniswapV2Pair,
+		address borrower,
+		uint redeemTokens,
+		uint redeemAmount,
+		uint amountAMin,
+		uint amountBMin
+	) internal virtual {
+		(address collateral, address borrowableA, address borrowableB) = getLendingPool(uniswapV2Pair);
+		address tokenA = IBorrowable(borrowableA).underlying();
+		address tokenB = IBorrowable(borrowableB).underlying();
+		// removeLiquidity
+		TransferHelper.safeTransfer(uniswapV2Pair, uniswapV2Pair, redeemAmount);
+		(uint amountAMax, uint amountBMax) = IUniswapV2Pair(uniswapV2Pair).burn(address(this));
+		require(amountAMax >= amountAMin, "ImpermaxRouter: INSUFFICIENT_A_AMOUNT");
+		require(amountBMax >= amountBMin, "ImpermaxRouter: INSUFFICIENT_B_AMOUNT");
+		// repay and refund
+		_repayAndRefund(borrowableA, tokenA, borrower, amountAMax);
+		_repayAndRefund(borrowableB, tokenB, borrower, amountBMax);
+		// repay flash redeem
+		ICollateral(collateral).transferFrom(borrower, collateral, redeemTokens);
+	}
+	
+	function _repayAndRefund(
+		address borrowable,
+		address token,
+		address borrower,
+		uint amountMax
+	) internal virtual {
+		//repay
+		uint amount = _repayAmount(borrowable, amountMax, borrower);
+		TransferHelper.safeTransfer(token, borrowable, amount);
+		IBorrowable(borrowable).borrow(borrower, address(0), 0, new bytes(0));		
+		// refund excess
+		if (amountMax > amount) {
+			uint refundAmount = amountMax - amount;
+			if (token == WETH) {		
+				IWETH(WETH).withdraw(refundAmount);
+				TransferHelper.safeTransferETH(borrower, refundAmount);
+			}
+			else TransferHelper.safeTransfer(token, borrower, refundAmount);
+		}
+	}
+	
 	/*** Impermax Callee ***/
 		
-	enum CallType {ADD_LIQUIDITY_AND_MINT, BORROWB}
+	enum CallType {ADD_LIQUIDITY_AND_MINT, BORROWB, REMOVE_LIQ_AND_REPAY}
 	struct CalleeData {
 		CallType callType;
 		address uniswapV2Pair;
@@ -279,13 +355,20 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		uint borrowAmount;
 		bytes data;
 	}
+	struct RemoveLiqAndRepayCalldata {
+		address borrower;
+		uint redeemTokens;
+		uint redeemAmount;
+		uint amountAMin;
+		uint amountBMin;
+	}
 	
 	function impermaxBorrow(address sender, address borrower, uint borrowAmount, bytes calldata data) external virtual override {
 		borrower; borrowAmount;
 		CalleeData memory calleeData = abi.decode(data, (CalleeData));
+		address declaredCaller = getBorrowable(calleeData.uniswapV2Pair, calleeData.borrowableIndex);
 		// only succeeds if called by a borrowable and if that borrowable has been called by the router
 		require(sender == address(this), "ImpermaxRouter: SENDER_NOT_ROUTER");
-		address declaredCaller = getBorrowable(calleeData.uniswapV2Pair, calleeData.borrowableIndex);
 		require(msg.sender == declaredCaller, "ImpermaxRouter: UNAUTHORIZED_CALLER");
 		if (calleeData.callType == CallType.ADD_LIQUIDITY_AND_MINT) {
 			AddLiquidityAndMintCalldata memory d = abi.decode(calleeData.data, (AddLiquidityAndMintCalldata));
@@ -300,7 +383,17 @@ contract Router01 is IRouter01, IImpermaxCallee {
 	}
 	
 	function impermaxRedeem(address sender, uint redeemAmount, bytes calldata data) external virtual override {
-		sender; redeemAmount; data;
+		redeemAmount;
+		CalleeData memory calleeData = abi.decode(data, (CalleeData));
+		address declaredCaller = getCollateral(calleeData.uniswapV2Pair);
+		// only succeeds if called by a collateral and if that collateral has been called by the router
+		require(sender == address(this), "ImpermaxRouter: SENDER_NOT_ROUTER");
+		require(msg.sender == declaredCaller, "ImpermaxRouter: UNAUTHORIZED_CALLER");
+		if (calleeData.callType == CallType.REMOVE_LIQ_AND_REPAY) {
+			RemoveLiqAndRepayCalldata memory d = abi.decode(calleeData.data, (RemoveLiqAndRepayCalldata));
+			_removeLiqAndRepay(calleeData.uniswapV2Pair, d.borrower, d.redeemTokens, d.redeemAmount, d.amountAMin, d.amountBMin);
+		}
+		else revert();
 	}
 		
 	/*** Utilities ***/

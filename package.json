@@ -22,6 +22,7 @@
     "ethereumjs-wallet": "^1.0.1",
     "save-dev": "0.0.1-security",
     "solc": "^0.7.3",
-    "truffle": "5.1.39"
+    "truffle": "5.1.39",
+    "truffle-hdwallet-provider": "^1.0.17"
   }
 }

@@ -26,6 +26,9 @@ interface IRouter01 {
 		address uniswapV2Pair, uint amountADesired, uint amountBDesired, uint amountAMin, uint amountBMin,
 		address to, uint deadline, bytes calldata permitDataA, bytes calldata permitDataB
 	) external;
+	function deleverage(
+		address uniswapV2Pair, uint redeemTokens, uint amountAMin, uint amountBMin, uint deadline, bytes calldata permitData
+	) external;
 	
 	function getBorrowable(address uniswapV2Pair, uint8 index) external view returns (address borrowable);
 	function getCollateral(address uniswapV2Pair) external view returns (address collateral);
