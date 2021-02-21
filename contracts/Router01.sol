@@ -458,7 +458,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"ff",
 			bDeployer,
 			keccak256(abi.encodePacked(factory, uniswapV2Pair, index)),
-			hex"dce5461c467adfa7d29f4f4ec4f20800c49339fcfe376b5dd84de3e7439ac67d" // Borrowable bytecode keccak256
+			hex"db9a3047d9291b4049febd9b63f0e6799aac23b6f8362f232240a86bc53ecc52" // Borrowable bytecode keccak256
 		))));
 	}
 	function getCollateral(address uniswapV2Pair) public virtual override view returns (address collateral) {
