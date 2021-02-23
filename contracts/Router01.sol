@@ -458,7 +458,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"ff",
 			bDeployer,
 			keccak256(abi.encodePacked(factory, uniswapV2Pair, index)),
-			hex"db9a3047d9291b4049febd9b63f0e6799aac23b6f8362f232240a86bc53ecc52" // Borrowable bytecode keccak256
+			hex"605ba1db56496978613939baf0ae31dccceea3f5ca53dfaa76512bc880d7bb8f" // Borrowable bytecode keccak256
 		))));
 	}
 	function getCollateral(address uniswapV2Pair) public virtual override view returns (address collateral) {
@@ -466,7 +466,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 			hex"ff",
 			cDeployer,
 			keccak256(abi.encodePacked(factory, uniswapV2Pair)),
-			hex"ee2c176bad107d41b418f0768b0dd2e4b0d910015bd32a91b90e10bf25881f67" // Collateral bytecode keccak256
+			hex"4b8788d8761647e6330407671d3c6c80afaed3d047800dba0e0e3befde047767" // Collateral bytecode keccak256
 		))));
 	}
 	function getLendingPool(address uniswapV2Pair) public virtual override view returns (address collateral, address borrowableA, address borrowableB) {

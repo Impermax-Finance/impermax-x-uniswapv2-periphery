@@ -7,7 +7,7 @@ import "./interfaces/ISimpleUniswapOracle.sol";
 contract SimpleUniswapOracle is ISimpleUniswapOracle {
 	using UQ112x112 for uint224;
 	
-	uint32 public constant MIN_T = 3600;
+	uint32 public constant MIN_T = 1800;
 	
 	struct Pair {
 		uint256 priceCumulativeA;
