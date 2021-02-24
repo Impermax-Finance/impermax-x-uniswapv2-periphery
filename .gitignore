@@ -7,3 +7,6 @@ node_modules
 yarn-error.log
 .build
 .npmignore
+contracts/CapitalFreeLiquidate.sol
+contracts/interfaces/ICapitalFreeLiquidate.sol
+test/CapitalFreeLiquidate.js

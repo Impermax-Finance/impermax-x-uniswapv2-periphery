@@ -24757,12 +24757,13 @@
         }
       },
       "links": {},
-      "address": "0x28B1fBEeDdE786c33E7aE0eE613F60fEc2Fe57db",
-      "transactionHash": "0xcae8de70d1ef204ae747a8ae7aa0ae8a3681eeed17efcf273089363d7c5b020f"
+      "address": "0x3fdB4b27e1b4be9b27514C643a8Baef95Cf9b549",
+      "transactionHash": "0x173e9fecce98f068babffbea9cdfb72ab5942981116d62d7d390b9cdd40a07f3"
     }
   },
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-02-23T00:00:51.810Z",
+  "updatedAt": "2021-02-23T13:50:05.438Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },

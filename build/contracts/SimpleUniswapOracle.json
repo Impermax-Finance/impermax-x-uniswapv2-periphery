@@ -9623,9 +9623,49 @@
     "name": "solc",
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "3": {
+      "events": {
+        "0xc58c63744da19faddae8e37958053493f49d71b8f78d4facf6002cd1c2618fcf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "pair",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "priceCumulative",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "blockTimestamp",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "bool",
+              "name": "lastIsA",
+              "type": "bool"
+            }
+          ],
+          "name": "PriceUpdate",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xc53bb18028feA1B413057e2b2474F9838c465Fc3",
+      "transactionHash": "0x0c0479776f67ff68336cac9342b4103988ca46812a233a3ba3540e2e6201df3f"
+    }
+  },
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-02-23T00:00:51.875Z",
+  "updatedAt": "2021-02-23T13:50:05.428Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },

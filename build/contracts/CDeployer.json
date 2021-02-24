@@ -1088,12 +1088,13 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0xb36709464961d81312a827Ef9af4642aC97F4578",
-      "transactionHash": "0x163728a4caede2a5bc866cafdddb8f6404bb04bdc9c23aefc636f6d2d217c061"
+      "address": "0xbeb37D48897bcAF7E340DdEa87974b08bc78890f",
+      "transactionHash": "0x5679c03ba42c5df640e76bdbedb5b5363468e3679b0228543bbb0cbd737d04c2"
     }
   },
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-02-23T00:00:51.778Z",
+  "updatedAt": "2021-02-23T13:50:05.450Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
