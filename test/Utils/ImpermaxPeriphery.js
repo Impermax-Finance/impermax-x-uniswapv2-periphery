@@ -117,7 +117,7 @@ async function getPermit(opts) {
 
 const permitGenerator = {
 	//Note: activatePermit is false by default. If you want to test the permit you need to configure mnemonic with the one of your ganache wallet
-	activatePermit: true,
+	activatePermit: false,
 	mnemonic: 'artist rigid narrow swallow catch attend pulp victory drift outside prepare tribe',
 	PKs: [],
 	initialize: async () => {

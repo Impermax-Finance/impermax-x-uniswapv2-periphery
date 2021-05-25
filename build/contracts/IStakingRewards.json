@@ -1,0 +1,851 @@
+{
+  "contractName": "IStakingRewards",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "rewardsToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "stakingToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getReward",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"getReward\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"rewardsToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"stake\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"stakingToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakingRewards.sol\":\"IStakingRewards\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakingRewards.sol\":{\"keccak256\":\"0x8b9954655209bbbe3185cd3f9e381c13b7fc2a725ee877860e148732b7ab6170\",\"urls\":[\"bzz-raw://1bb110810490088b417aa2bef36974d06c1105f5f4c1c15ed3ed5fd9e6a6ffa7\",\"dweb:/ipfs/QmWXDQKna2a11s41hvL9rEsApQ3McRqYe9CVCkFrMKQpGo\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity >=0.5.0;\r\n\r\ninterface IStakingRewards {\r\n    function rewardsToken() external view returns (address);\r\n    function stakingToken() external view returns (address);\r\n    function balanceOf(address account) external view returns (uint256);\r\n\r\n    function stake(uint256 amount) external;\r\n    function withdraw(uint256 amount) external;\r\n    function getReward() external;\r\n}",
+  "sourcePath": "C:\\Users\\simor\\Desktop\\impermax-x-uniswapv2-periphery\\test\\Contracts\\imx-univ2-core\\interfaces\\IStakingRewards.sol",
+  "ast": {
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakingRewards.sol",
+    "exportedSymbols": {
+      "IStakingRewards": [
+        7519
+      ]
+    },
+    "id": 7520,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7488,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:31"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 7519,
+        "linearizedBaseContracts": [
+          7519
+        ],
+        "name": "IStakingRewards",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7493,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rewardsToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7489,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "82:2:31"
+            },
+            "returnParameters": {
+              "id": 7492,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7491,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7493,
+                  "src": "108:7:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7490,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "108:7:31",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "107:9:31"
+            },
+            "scope": 7519,
+            "src": "61:56:31",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7498,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stakingToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7494,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "144:2:31"
+            },
+            "returnParameters": {
+              "id": 7497,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7496,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7498,
+                  "src": "170:7:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7495,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "170:7:31",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "169:9:31"
+            },
+            "scope": 7519,
+            "src": "123:56:31",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7505,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balanceOf",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7501,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7500,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7505,
+                  "src": "204:15:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7499,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "204:7:31",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "203:17:31"
+            },
+            "returnParameters": {
+              "id": 7504,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7503,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7505,
+                  "src": "244:7:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7502,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "244:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "243:9:31"
+            },
+            "scope": 7519,
+            "src": "185:68:31",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7510,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stake",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7508,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7507,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7510,
+                  "src": "276:14:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7506,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "276:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "275:16:31"
+            },
+            "returnParameters": {
+              "id": 7509,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "300:0:31"
+            },
+            "scope": 7519,
+            "src": "261:40:31",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7515,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdraw",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7513,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7512,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7515,
+                  "src": "325:14:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7511,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "325:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "324:16:31"
+            },
+            "returnParameters": {
+              "id": 7514,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "349:0:31"
+            },
+            "scope": 7519,
+            "src": "307:43:31",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7518,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getReward",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7516,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "374:2:31"
+            },
+            "returnParameters": {
+              "id": 7517,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "385:0:31"
+            },
+            "scope": 7519,
+            "src": "356:30:31",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 7520,
+        "src": "28:361:31"
+      }
+    ],
+    "src": "0:389:31"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakingRewards.sol",
+    "exportedSymbols": {
+      "IStakingRewards": [
+        7519
+      ]
+    },
+    "id": 7520,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7488,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:31"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 7519,
+        "linearizedBaseContracts": [
+          7519
+        ],
+        "name": "IStakingRewards",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7493,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "rewardsToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7489,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "82:2:31"
+            },
+            "returnParameters": {
+              "id": 7492,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7491,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7493,
+                  "src": "108:7:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7490,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "108:7:31",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "107:9:31"
+            },
+            "scope": 7519,
+            "src": "61:56:31",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7498,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stakingToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7494,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "144:2:31"
+            },
+            "returnParameters": {
+              "id": 7497,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7496,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7498,
+                  "src": "170:7:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7495,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "170:7:31",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "169:9:31"
+            },
+            "scope": 7519,
+            "src": "123:56:31",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7505,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balanceOf",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7501,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7500,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7505,
+                  "src": "204:15:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7499,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "204:7:31",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "203:17:31"
+            },
+            "returnParameters": {
+              "id": 7504,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7503,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7505,
+                  "src": "244:7:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7502,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "244:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "243:9:31"
+            },
+            "scope": 7519,
+            "src": "185:68:31",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7510,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stake",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7508,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7507,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7510,
+                  "src": "276:14:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7506,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "276:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "275:16:31"
+            },
+            "returnParameters": {
+              "id": 7509,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "300:0:31"
+            },
+            "scope": 7519,
+            "src": "261:40:31",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7515,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdraw",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7513,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7512,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7515,
+                  "src": "325:14:31",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7511,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "325:7:31",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "324:16:31"
+            },
+            "returnParameters": {
+              "id": 7514,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "349:0:31"
+            },
+            "scope": 7519,
+            "src": "307:43:31",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7518,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getReward",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7516,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "374:2:31"
+            },
+            "returnParameters": {
+              "id": 7517,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "385:0:31"
+            },
+            "scope": 7519,
+            "src": "356:30:31",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 7520,
+        "src": "28:361:31"
+      }
+    ],
+    "src": "0:389:31"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.2",
+  "updatedAt": "2021-05-22T10:32:51.097Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

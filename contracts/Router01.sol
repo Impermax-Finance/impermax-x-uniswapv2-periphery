@@ -79,7 +79,7 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		bytes calldata permitData
 	) external virtual override ensure(deadline) returns (uint tokens) {
 		address uniswapV2Pair = IPoolToken(poolToken).underlying();
-		_permitUniswapV2Pair(uniswapV2Pair, amount, deadline, permitData);
+		_permit(uniswapV2Pair, amount, deadline, permitData);
 		return _mint(poolToken, uniswapV2Pair, amount, msg.sender, to);
 	}
 	
@@ -408,17 +408,6 @@ contract Router01 is IRouter01, IImpermaxCallee {
 		(bool approveMax, uint8 v, bytes32 r, bytes32 s) = abi.decode(permitData, (bool, uint8, bytes32, bytes32));
 		uint value = approveMax ? uint(-1) : amount;
 		IPoolToken(poolToken).permit(msg.sender, address(this), value, deadline, v, r, s);
-	}
-	function _permitUniswapV2Pair(
-		address uniswapV2Pair, 
-		uint amount, 
-		uint deadline,
-		bytes memory permitData
-	) internal virtual {
-		if (permitData.length == 0) return;
-		(bool approveMax, uint8 v, bytes32 r, bytes32 s) = abi.decode(permitData, (bool, uint8, bytes32, bytes32));
-		uint value = approveMax ? uint(-1) : amount;
-		IUniswapV2Pair(uniswapV2Pair).permit(msg.sender, address(this), value, deadline, v, r, s);
 	}
 	function _borrowPermit(
 		address borrowable, 

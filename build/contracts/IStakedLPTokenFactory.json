@@ -1,0 +1,1384 @@
+{
+  "contractName": "IStakedLPTokenFactory",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token0",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token1",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "stakingRewards",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "stakedLPToken",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "StakedLPTokenCreated",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "router",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "WETH",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "getStakedLPToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "allStakedLPToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "allStakedLPTokenLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "stakingRewards",
+          "type": "address"
+        }
+      ],
+      "name": "createStakedLPToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "stakedLPToken",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token0\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token1\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"stakingRewards\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"stakedLPToken\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"StakedLPTokenCreated\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"WETH\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allStakedLPToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"allStakedLPTokenLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"stakingRewards\",\"type\":\"address\"}],\"name\":\"createStakedLPToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"stakedLPToken\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"getStakedLPToken\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"router\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakedLPTokenFactory.sol\":\"IStakedLPTokenFactory\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakedLPTokenFactory.sol\":{\"keccak256\":\"0xadb30a2803209f80775642b67622eb66f408b256826e6ce4ed29350372fcc7e9\",\"urls\":[\"bzz-raw://2599406dfd4664a873bc4a907a78f10851cddccc87cbf9a71f3555b557ce2d9c\",\"dweb:/ipfs/Qmd3ihJWpJ2Esyub8z29YsiW1rki2dWJLaeDU2n9XiaDPw\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity >=0.5.0;\r\n\r\ninterface IStakedLPTokenFactory {\r\n\t\r\n\tevent StakedLPTokenCreated(address indexed token0, address indexed token1, address indexed stakingRewards, address stakedLPToken, uint);\r\n\r\n\tfunction router() external view returns (address);\r\n\tfunction WETH() external view returns (address);\r\n\tfunction getStakedLPToken(address) external view returns (address);\r\n\tfunction allStakedLPToken(uint) external view returns (address);\r\n\tfunction allStakedLPTokenLength() external view returns (uint);\r\n\t\r\n\tfunction createStakedLPToken(address stakingRewards) external returns (address stakedLPToken);\r\n\t\r\n}",
+  "sourcePath": "C:\\Users\\simor\\Desktop\\impermax-x-uniswapv2-periphery\\test\\Contracts\\imx-univ2-core\\interfaces\\IStakedLPTokenFactory.sol",
+  "ast": {
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakedLPTokenFactory.sol",
+    "exportedSymbols": {
+      "IStakedLPTokenFactory": [
+        7486
+      ]
+    },
+    "id": 7487,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7437,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:30"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 7486,
+        "linearizedBaseContracts": [
+          7486
+        ],
+        "name": "IStakedLPTokenFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 7449,
+            "name": "StakedLPTokenCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 7448,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7439,
+                  "indexed": true,
+                  "name": "token0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "94:22:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7438,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "94:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7441,
+                  "indexed": true,
+                  "name": "token1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "118:22:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7440,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "118:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7443,
+                  "indexed": true,
+                  "name": "stakingRewards",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "142:30:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7442,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "142:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7445,
+                  "indexed": false,
+                  "name": "stakedLPToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "174:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7444,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "174:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7447,
+                  "indexed": false,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "197:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7446,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "197:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "93:109:30"
+            },
+            "src": "67:136:30"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7454,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "router",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7450,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "223:2:30"
+            },
+            "returnParameters": {
+              "id": 7453,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7452,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7454,
+                  "src": "249:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7451,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "249:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "248:9:30"
+            },
+            "scope": 7486,
+            "src": "208:50:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7459,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "WETH",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7455,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "274:2:30"
+            },
+            "returnParameters": {
+              "id": 7458,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7457,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7459,
+                  "src": "300:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7456,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "300:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "299:9:30"
+            },
+            "scope": 7486,
+            "src": "261:48:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7466,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStakedLPToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7462,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7461,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7466,
+                  "src": "338:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7460,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "338:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "337:9:30"
+            },
+            "returnParameters": {
+              "id": 7465,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7464,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7466,
+                  "src": "370:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7463,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "370:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "369:9:30"
+            },
+            "scope": 7486,
+            "src": "312:67:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7473,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "allStakedLPToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7469,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7468,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7473,
+                  "src": "408:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7467,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "408:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "407:6:30"
+            },
+            "returnParameters": {
+              "id": 7472,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7471,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7473,
+                  "src": "437:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7470,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "437:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "436:9:30"
+            },
+            "scope": 7486,
+            "src": "382:64:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7478,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "allStakedLPTokenLength",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7474,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "480:2:30"
+            },
+            "returnParameters": {
+              "id": 7477,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7476,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7478,
+                  "src": "506:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7475,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "506:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "505:6:30"
+            },
+            "scope": 7486,
+            "src": "449:63:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7485,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createStakedLPToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7481,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7480,
+                  "name": "stakingRewards",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7485,
+                  "src": "547:22:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7479,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "547:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "546:24:30"
+            },
+            "returnParameters": {
+              "id": 7484,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7483,
+                  "name": "stakedLPToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7485,
+                  "src": "589:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7482,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "589:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "588:23:30"
+            },
+            "scope": 7486,
+            "src": "518:94:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 7487,
+        "src": "28:590:30"
+      }
+    ],
+    "src": "0:618:30"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/IStakedLPTokenFactory.sol",
+    "exportedSymbols": {
+      "IStakedLPTokenFactory": [
+        7486
+      ]
+    },
+    "id": 7487,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7437,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:30"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 7486,
+        "linearizedBaseContracts": [
+          7486
+        ],
+        "name": "IStakedLPTokenFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 7449,
+            "name": "StakedLPTokenCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 7448,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7439,
+                  "indexed": true,
+                  "name": "token0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "94:22:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7438,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "94:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7441,
+                  "indexed": true,
+                  "name": "token1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "118:22:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7440,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "118:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7443,
+                  "indexed": true,
+                  "name": "stakingRewards",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "142:30:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7442,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "142:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7445,
+                  "indexed": false,
+                  "name": "stakedLPToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "174:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7444,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "174:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7447,
+                  "indexed": false,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7449,
+                  "src": "197:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7446,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "197:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "93:109:30"
+            },
+            "src": "67:136:30"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7454,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "router",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7450,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "223:2:30"
+            },
+            "returnParameters": {
+              "id": 7453,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7452,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7454,
+                  "src": "249:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7451,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "249:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "248:9:30"
+            },
+            "scope": 7486,
+            "src": "208:50:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7459,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "WETH",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7455,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "274:2:30"
+            },
+            "returnParameters": {
+              "id": 7458,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7457,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7459,
+                  "src": "300:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7456,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "300:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "299:9:30"
+            },
+            "scope": 7486,
+            "src": "261:48:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7466,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStakedLPToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7462,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7461,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7466,
+                  "src": "338:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7460,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "338:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "337:9:30"
+            },
+            "returnParameters": {
+              "id": 7465,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7464,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7466,
+                  "src": "370:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7463,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "370:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "369:9:30"
+            },
+            "scope": 7486,
+            "src": "312:67:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7473,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "allStakedLPToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7469,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7468,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7473,
+                  "src": "408:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7467,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "408:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "407:6:30"
+            },
+            "returnParameters": {
+              "id": 7472,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7471,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7473,
+                  "src": "437:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7470,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "437:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "436:9:30"
+            },
+            "scope": 7486,
+            "src": "382:64:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7478,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "allStakedLPTokenLength",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7474,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "480:2:30"
+            },
+            "returnParameters": {
+              "id": 7477,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7476,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7478,
+                  "src": "506:4:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7475,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "506:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "505:6:30"
+            },
+            "scope": 7486,
+            "src": "449:63:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 7485,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createStakedLPToken",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7481,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7480,
+                  "name": "stakingRewards",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7485,
+                  "src": "547:22:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7479,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "547:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "546:24:30"
+            },
+            "returnParameters": {
+              "id": 7484,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7483,
+                  "name": "stakedLPToken",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7485,
+                  "src": "589:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 7482,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "589:7:30",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "588:23:30"
+            },
+            "scope": 7486,
+            "src": "518:94:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 7487,
+        "src": "28:590:30"
+      }
+    ],
+    "src": "0:618:30"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.2",
+  "updatedAt": "2021-05-22T10:32:51.096Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

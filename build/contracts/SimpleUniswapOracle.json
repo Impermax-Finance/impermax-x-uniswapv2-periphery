@@ -9624,6 +9624,44 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
+    "1": {
+      "events": {
+        "0xc58c63744da19faddae8e37958053493f49d71b8f78d4facf6002cd1c2618fcf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "pair",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "priceCumulative",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint32",
+              "name": "blockTimestamp",
+              "type": "uint32"
+            },
+            {
+              "indexed": false,
+              "internalType": "bool",
+              "name": "lastIsA",
+              "type": "bool"
+            }
+          ],
+          "name": "PriceUpdate",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x5671B249391cA5E6a8FE28CEb1e85Dc41c12Ba7D",
+      "transactionHash": "0x7aef37721904480631a9d8eb6bddae34c6e7ffd641d87b19c86f20c964b88154"
+    },
     "3": {
       "events": {
         "0xc58c63744da19faddae8e37958053493f49d71b8f78d4facf6002cd1c2618fcf": {
@@ -9664,7 +9702,7 @@
     }
   },
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-02-23T13:50:05.428Z",
+  "updatedAt": "2021-03-12T13:25:57.671Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

@@ -31,7 +31,7 @@ const BDeployer = artifacts.require('BDeployer');
 const CDeployer = artifacts.require('CDeployer');
 const Collateral = artifacts.require('Collateral');
 const Borrowable = artifacts.require('Borrowable');
-const Router01 = artifacts.require('Router01');
+const Router02 = artifacts.require('Router02');
 const WETH9 = artifacts.require('WETH9');
 
 const oneMantissa = (new BN(10)).pow(new BN(18));
@@ -56,7 +56,7 @@ let ETH_IS_A;
 const INITIAL_EXCHANGE_RATE = oneMantissa;
 const MINIMUM_LIQUIDITY = new BN(1000);
 
-contract('Router01', function (accounts) {
+contract('Deleverage02', function (accounts) {
 	let root = accounts[0];
 	let borrower = accounts[1];
 	let lender = accounts[2];
@@ -78,7 +78,7 @@ contract('Router01', function (accounts) {
 		simpleUniswapOracle = await SimpleUniswapOracle.new();
 		const bDeployer = await BDeployer.new();
 		const cDeployer = await CDeployer.new();
-		impermaxFactory = await Factory.new(address(0), address(0), bDeployer.address, cDeployer.address, uniswapV2Factory.address, simpleUniswapOracle.address);
+		impermaxFactory = await Factory.new(address(0), address(0), bDeployer.address, cDeployer.address, simpleUniswapOracle.address);
 		WETH = await WETH9.new();
 		UNI = await MockERC20.new('Uniswap', 'UNI');
 		const uniswapV2PairAddress = await uniswapV2Factory.createPair.call(WETH.address, UNI.address);
@@ -105,7 +105,7 @@ contract('Router01', function (accounts) {
 		ETH_IS_A = await borrowable0.underlying() == WETH.address;
 		if (ETH_IS_A) [borrowableWETH, borrowableUNI] = [borrowable0, borrowable1];
 		else [borrowableWETH, borrowableUNI] = [borrowable1, borrowable0]
-		router = await Router01.new(impermaxFactory.address, bDeployer.address, cDeployer.address, WETH.address);
+		router = await Router02.new(impermaxFactory.address, bDeployer.address, cDeployer.address, WETH.address);
 		await increaseTime(3700); // wait for oracle to be ready
 		await permitGenerator.initialize();
 		
