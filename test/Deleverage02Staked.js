@@ -33,11 +33,10 @@ const Collateral = artifacts.require('Collateral');
 const Borrowable = artifacts.require('Borrowable');
 const Router02 = artifacts.require('Router02');
 const WETH9 = artifacts.require('WETH9');
-const Quick = artifacts.require('QuickToken');
 const StakingRewards = artifacts.require('StakingRewards');
 const StakingRewardsFactory = artifacts.require('StakingRewardsFactory');
-const StakedLPToken = artifacts.require('StakedLPToken');
-const StakedLPTokenFactory = artifacts.require('StakedLPTokenFactory');
+const StakedLPToken01 = artifacts.require('StakedLPToken01');
+const StakedLPTokenFactory01 = artifacts.require('StakedLPTokenFactory01');
 
 const oneMantissa = (new BN(10)).pow(new BN(18));
 const UNI_LP_AMOUNT = oneMantissa;
@@ -68,7 +67,7 @@ contract('Deleverage02 Staked', function (accounts) {
 	let liquidator = accounts[3];
 	let minter = accounts[4];
 	
-	let quick;
+	let rewardsToken;
 	let uniswapV2Factory;
 	let stakingRewardsFactory;
 	let stakedLPTokenFactory;
@@ -86,16 +85,16 @@ contract('Deleverage02 Staked', function (accounts) {
 	
 	beforeEach(async () => {
 		// Create base contracts
-		quick = await Quick.new(minter, minter, 0);
+		rewardsToken = await MockERC20.new('', '');
 		uniswapV2Factory = await UniswapV2Factory.new(address(0));
-		stakingRewardsFactory = await StakingRewardsFactory.new(quick.address, 0);
+		stakingRewardsFactory = await StakingRewardsFactory.new(rewardsToken.address, 0);
 		simpleUniswapOracle = await SimpleUniswapOracle.new();
 		const bDeployer = await BDeployer.new();
 		const cDeployer = await CDeployer.new();
 		impermaxFactory = await Factory.new(address(0), address(0), bDeployer.address, cDeployer.address, simpleUniswapOracle.address);
 		WETH = await WETH9.new();
 		router = await Router02.new(impermaxFactory.address, bDeployer.address, cDeployer.address, WETH.address);
-		stakedLPTokenFactory = await StakedLPTokenFactory.new(address(0), address(0));
+		stakedLPTokenFactory = await StakedLPTokenFactory01.new(address(0), address(0));
 		// Create Uniswap Pair
 		UNI = await MockERC20.new('Uniswap', 'UNI');
 		const uniswapV2PairAddress = await uniswapV2Factory.createPair.call(WETH.address, UNI.address);
@@ -115,7 +114,7 @@ contract('Deleverage02 Staked', function (accounts) {
 		// Create staked LP token
 		const stakedLPTokenAddress = await stakedLPTokenFactory.createStakedLPToken.call(stakingRewardsAddress);
 		await stakedLPTokenFactory.createStakedLPToken(stakingRewardsAddress);
-		stakedLPToken = await StakedLPToken.at(stakedLPTokenAddress);
+		stakedLPToken = await StakedLPToken01.at(stakedLPTokenAddress);
 		// Create Pair On Impermax
 		collateralAddress = await impermaxFactory.createCollateral.call(stakedLPTokenAddress);
 		borrowable0Address = await impermaxFactory.createBorrowable0.call(stakedLPTokenAddress);

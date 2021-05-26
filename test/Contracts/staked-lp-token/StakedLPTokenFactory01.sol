@@ -1,11 +1,11 @@
 pragma solidity =0.5.16;
 
-import "./StakedLPToken.sol";
+import "./StakedLPToken01.sol";
 import "./interfaces/IStakingRewards.sol";
-import "./interfaces/IStakedLPTokenFactory.sol";
+import "./interfaces/IStakedLPTokenFactory01.sol";
 import "./interfaces/IUniswapV2Pair.sol";
 
-contract StakedLPTokenFactory is IStakedLPTokenFactory {
+contract StakedLPTokenFactory01 is IStakedLPTokenFactory01 {
 	address public router;
 	address public WETH;
 
@@ -29,11 +29,11 @@ contract StakedLPTokenFactory is IStakedLPTokenFactory {
 		address rewardsToken = IStakingRewards(stakingRewards).rewardsToken();
 		address token0 = IUniswapV2Pair(pair).token0();
 		address token1 = IUniswapV2Pair(pair).token1();
-		bytes memory bytecode = type(StakedLPToken).creationCode;
+		bytes memory bytecode = type(StakedLPToken01).creationCode;
 		assembly {
 			stakedLPToken := create2(0, add(bytecode, 32), mload(bytecode), stakingRewards)
 		}
-		StakedLPToken(stakedLPToken)._initialize(stakingRewards, pair, rewardsToken, token0, token1, router, WETH);
+		StakedLPToken01(stakedLPToken)._initialize(stakingRewards, pair, rewardsToken, token0, token1, router, WETH);
 		getStakedLPToken[stakingRewards] = stakedLPToken;
 		allStakedLPToken.push(stakedLPToken);
 		emit StakedLPTokenCreated(token0, token1, stakingRewards, stakedLPToken, allStakedLPToken.length);

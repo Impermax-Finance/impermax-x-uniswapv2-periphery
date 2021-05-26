@@ -2,15 +2,17 @@ pragma solidity =0.5.16;
 
 import "./PoolToken.sol";
 import "./interfaces/IStakingRewards.sol";
-import "./interfaces/IStakedLPToken.sol";
+import "./interfaces/IStakedLPToken01.sol";
 import "./interfaces/IERC20.sol";
 import "./interfaces/IUniswapV2Router01.sol";
 import "./interfaces/IUniswapV2Pair.sol";
 import "./libraries/SafeToken.sol";
 import "./libraries/Math.sol";
 
-contract StakedLPToken is IStakedLPToken, IUniswapV2Pair, PoolToken {
+contract StakedLPToken01 is IStakedLPToken01, IUniswapV2Pair, PoolToken {
     using SafeToken for address;
+	
+	bool public constant isStakedLPToken = true;
 	
 	address public stakingRewards;
 	address public rewardsToken;
@@ -31,7 +33,7 @@ contract StakedLPToken is IStakedLPToken, IUniswapV2Pair, PoolToken {
 		address _router,
 		address _WETH
 	) external {
-		require(factory == address(0), "StakedLPToken: FACTORY_ALREADY_SET"); // sufficient check
+		require(factory == address(0), "StakedLPToken01: FACTORY_ALREADY_SET"); // sufficient check
 		factory = msg.sender;
 		_setName("Staked Uniswap V2", "STKD-UNI-V2");
 		stakingRewards = _stakingRewards;
@@ -64,7 +66,7 @@ contract StakedLPToken is IStakedLPToken, IUniswapV2Pair, PoolToken {
 			mintTokens = mintTokens.sub(MINIMUM_LIQUIDITY);
 			_mint(address(0), MINIMUM_LIQUIDITY);
 		}
-		require(mintTokens > 0, "StakedLPToken: MINT_AMOUNT_ZERO");
+		require(mintTokens > 0, "StakedLPToken01: MINT_AMOUNT_ZERO");
 		_mint(minter, mintTokens);
 		emit Mint(msg.sender, minter, mintAmount, mintTokens);
 	}
@@ -74,11 +76,11 @@ contract StakedLPToken is IStakedLPToken, IUniswapV2Pair, PoolToken {
 		uint redeemTokens = balanceOf[address(this)];
 		redeemAmount = redeemTokens.mul(exchangeRate()).div(1e18);
 
-		require(redeemAmount > 0, "StakedLPToken: REDEEM_AMOUNT_ZERO");
-		require(redeemAmount <= totalBalance, "StakedLPToken: INSUFFICIENT_CASH");
+		require(redeemAmount > 0, "StakedLPToken01: REDEEM_AMOUNT_ZERO");
+		require(redeemAmount <= totalBalance, "StakedLPToken01: INSUFFICIENT_CASH");
 		_burn(address(this), redeemTokens);
 		IStakingRewards(stakingRewards).withdraw(redeemAmount);
-		rewardsToken.safeTransfer(redeemer, redeemAmount);
+		_safeTransfer(redeemer, redeemAmount);
 		emit Redeem(msg.sender, redeemer, redeemAmount, redeemTokens);		
 	}
 	
@@ -159,7 +161,7 @@ contract StakedLPToken is IStakedLPToken, IUniswapV2Pair, PoolToken {
 		uint256 _totalSupply = IUniswapV2Pair(underlying).totalSupply();
 		reserve0 = safe112(_totalBalance.mul(reserve0).div(_totalSupply));
 		reserve1 = safe112(_totalBalance.mul(reserve1).div(_totalSupply));
-		require(reserve0 > 100 && reserve1 > 100, "StakedLPToken: INSUFFICIENT_RESERVES");
+		require(reserve0 > 100 && reserve1 > 100, "StakedLPToken01: INSUFFICIENT_RESERVES");
 	}
 	function price0CumulativeLast() external view returns (uint256) {
 		return IUniswapV2Pair(underlying).price0CumulativeLast();
@@ -171,7 +173,7 @@ contract StakedLPToken is IStakedLPToken, IUniswapV2Pair, PoolToken {
 	/*** Utilities ***/
 	
     function safe112(uint n) internal pure returns (uint112) {
-        require(n < 2**112, "StakedLPToken: SAFE112");
+        require(n < 2**112, "StakedLPToken01: SAFE112");
         return uint112(n);
     }
 }

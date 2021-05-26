@@ -7,7 +7,7 @@ import "./interfaces/IBorrowable.sol";
 import "./interfaces/ICollateral.sol";
 import "./interfaces/IImpermaxCallee.sol";
 import "./interfaces/IERC20.sol";
-import "./interfaces/IStakedLPToken.sol";
+import "./interfaces/IStakedLPToken01.sol";
 import "./interfaces/IWETH.sol";
 import "./interfaces/IUniswapV2Pair.sol";
 import "./libraries/SafeMath.sol";
@@ -81,10 +81,10 @@ contract Router02 is IRouter02, IImpermaxCallee {
 	) external virtual override ensure(deadline) returns (uint tokens) {
 		address underlying = IPoolToken(poolToken).underlying();
 		if (isStakedLPToken(underlying)) {
-			address uniswapV2Pair = IStakedLPToken(underlying).underlying();
+			address uniswapV2Pair = IStakedLPToken01(underlying).underlying();
 			_permit(uniswapV2Pair, amount, deadline, permitData);
 			TransferHelper.safeTransferFrom(uniswapV2Pair, msg.sender, underlying, amount);
-			IStakedLPToken(underlying).mint(poolToken);
+			IStakedLPToken01(underlying).mint(poolToken);
 			return IPoolToken(poolToken).mint(to);
 		} else {
 			_permit(underlying, amount, deadline, permitData);
@@ -106,7 +106,7 @@ contract Router02 is IRouter02, IImpermaxCallee {
 		address underlying = IPoolToken(poolToken).underlying();
 		if (isStakedLPToken(underlying)) {
 			IPoolToken(poolToken).redeem(underlying);
-			return IStakedLPToken(underlying).redeem(to);
+			return IStakedLPToken01(underlying).redeem(to);
 		} else {
 			return IPoolToken(poolToken).redeem(to);
 		}
@@ -325,7 +325,7 @@ contract Router02 is IRouter02, IImpermaxCallee {
 		// removeLiquidity
 		IUniswapV2Pair(underlying).transfer(underlying, redeemAmount);
 		//TransferHelper.safeTransfer(underlying, underlying, redeemAmount);
-		if (isStakedLPToken(underlying)) IStakedLPToken(underlying).redeem(uniswapV2Pair);
+		if (isStakedLPToken(underlying)) IStakedLPToken01(underlying).redeem(uniswapV2Pair);
 		(uint amountAMax, uint amountBMax) = IUniswapV2Pair(uniswapV2Pair).burn(address(this));
 		require(amountAMax >= amountAMin, "ImpermaxRouter: INSUFFICIENT_A_AMOUNT");
 		require(amountBMax >= amountBMin, "ImpermaxRouter: INSUFFICIENT_B_AMOUNT");
@@ -464,15 +464,14 @@ contract Router02 is IRouter02, IImpermaxCallee {
 	}
 	
 	function isStakedLPToken(address underlying) public virtual override view returns(bool) {
-		try IStakedLPToken(underlying).REINVEST_BOUNTY() returns (uint REINVEST_BOUNTY) {
-			if (REINVEST_BOUNTY > 0) return true;
-			return false;
+		try IStakedLPToken01(underlying).isStakedLPToken() returns (bool result) {
+			return result;
 		} catch {
 			return false;
 		}
 	}
 	function getUniswapV2Pair(address underlying) public virtual override view returns (address) {
-		try IStakedLPToken(underlying).underlying() returns (address u) {
+		try IStakedLPToken01(underlying).underlying() returns (address u) {
 			if (u != address(0)) return u;
 			return underlying;
 		} catch {

@@ -1,6 +1,6 @@
 pragma solidity >=0.5.0;
 
-interface IStakedLPToken {
+interface IStakedLPToken01 {
 
 	/*** Impermax ERC20 ***/
 	
@@ -45,6 +45,7 @@ interface IStakedLPToken {
 	
 	event Reinvest(address indexed caller, uint256 reward, uint256 bounty);
 	
+	function isStakedLPToken() external pure returns (bool);
 	function stakingRewards() external view returns (address);
 	function rewardsToken() external view returns (address);
 	function router() external view returns (address);
