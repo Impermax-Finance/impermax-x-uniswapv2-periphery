@@ -118,7 +118,9 @@ contract Router02 is IRouter02, IImpermaxCallee {
 		uint deadline,
 		bytes memory permitData
 	) public virtual override ensure(deadline) checkETH(poolToken) returns (uint amountETH) {
-		amountETH = redeem(poolToken, tokens, address(this), deadline, permitData);
+		_permit(poolToken, tokens, deadline, permitData);
+		IPoolToken(poolToken).transferFrom(msg.sender, poolToken, tokens);
+		amountETH = IPoolToken(poolToken).redeem(address(this));
 		IWETH(WETH).withdraw(amountETH);
 		TransferHelper.safeTransferETH(to, amountETH);
 	}
