@@ -583,7 +583,17 @@ contract Router03 is IRouter02, IImpermaxCallee {
         TransferHelper.safeTransferFrom(tokenA, msg.sender, address(this), amountADesired);
         TransferHelper.safeTransferFrom(tokenB, msg.sender, address(this), amountBDesired);
         (uint256 amountA, uint256 amountB, uint256 liquidity) = IDexRouter(router).addLiquidity(
-            tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin, to, deadline
+            tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin, address(this), deadline
         );
+    }
+
+    function _mintCollateral(address poolToken, uint256 amount, address to, uint256 deadline)
+        internal
+        ensure(deadline)
+        returns (uint256 tokens)
+    {
+        address underlying = IPoolToken(poolToken).underlying();
+        IStakedLPToken01(underlying).mint(poolToken);
+        return IPoolToken(poolToken).mint(to);
     }
 }
