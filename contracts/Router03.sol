@@ -598,9 +598,16 @@ contract Router03 is IRouter02, IImpermaxCallee {
             address(this),
             params.deadline
         );
+        tokens = _mintCollateral(params.poolToken, params.to, params.deadline);
+        if (IERC20(params.tokenA).balanceOf(address(this)) > 0) {
+            IERC20(params.tokenA).transfer(msg.sender, IERC20(params.tokenA).balanceOf(address(this)));
+        }
+        if (IERC20(params.tokenB).balanceOf(address(this)) > 0) {
+            IERC20(params.tokenB).transfer(msg.sender, IERC20(params.tokenB).balanceOf(address(this)));
+        }
     }
 
-    function _mintCollateral(address poolToken, uint256 amount, address to, uint256 deadline)
+    function _mintCollateral(address poolToken, address to, uint256 deadline)
         internal
         ensure(deadline)
         returns (uint256 tokens)
