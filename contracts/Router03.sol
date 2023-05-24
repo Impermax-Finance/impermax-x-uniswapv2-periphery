@@ -10,19 +10,20 @@ import "./interfaces/IERC20.sol";
 import "./interfaces/IStakedLPToken01.sol";
 import "./interfaces/IWETH.sol";
 import "./interfaces/IUniswapV2Pair.sol";
+import "./interfaces/IDexRouter.sol";
 import "./libraries/SafeMath.sol";
 import "./libraries/TransferHelper.sol";
 import "./libraries/UniswapV2Library.sol";
 
 contract Router03 is IRouter02, IImpermaxCallee {
-    using SafeMath for uint;
+    using SafeMath for uint256;
 
     address public immutable override factory;
     address public immutable override bDeployer;
     address public immutable override cDeployer;
     address public immutable override WETH;
 
-    modifier ensure(uint deadline) {
+    modifier ensure(uint256 deadline) {
         require(deadline >= block.timestamp, "ImpermaxRouter: EXPIRED");
         _;
     }
@@ -43,42 +44,50 @@ contract Router03 is IRouter02, IImpermaxCallee {
         assert(msg.sender == WETH); // only accept ETH via fallback from the WETH contract
     }
 
-    /*** Mint ***/
+    /**
+     * Mint **
+     */
 
-    function _mint(
-        address poolToken,
-        address token,
-        uint amount,
-        address from,
-        address to
-    ) internal virtual returns (uint tokens) {
+    function _mint(address poolToken, address token, uint256 amount, address from, address to)
+        internal
+        virtual
+        returns (uint256 tokens)
+    {
         if (from == address(this)) TransferHelper.safeTransfer(token, poolToken, amount);
         else TransferHelper.safeTransferFrom(token, from, poolToken, amount);
         tokens = IPoolToken(poolToken).mint(to);
     }
-    function mint(
-        address poolToken,
-        uint amount,
-        address to,
-        uint deadline
-    ) external virtual override ensure(deadline) returns (uint tokens) {
+
+    function mint(address poolToken, uint256 amount, address to, uint256 deadline)
+        external
+        virtual
+        override
+        ensure(deadline)
+        returns (uint256 tokens)
+    {
         return _mint(poolToken, IPoolToken(poolToken).underlying(), amount, msg.sender, to);
     }
-    function mintETH(
-        address poolToken,
-        address to,
-        uint deadline
-    ) external virtual override payable ensure(deadline) checkETH(poolToken) returns (uint tokens) {
+
+    function mintETH(address poolToken, address to, uint256 deadline)
+        external
+        payable
+        virtual
+        override
+        ensure(deadline)
+        checkETH(poolToken)
+        returns (uint256 tokens)
+    {
         IWETH(WETH).deposit{value: msg.value}();
         return _mint(poolToken, WETH, msg.value, address(this), to);
     }
-    function mintCollateral(
-        address poolToken,
-        uint amount,
-        address to,
-        uint deadline,
-        bytes calldata permitData
-    ) external virtual override ensure(deadline) returns (uint tokens) {
+
+    function mintCollateral(address poolToken, uint256 amount, address to, uint256 deadline, bytes calldata permitData)
+        external
+        virtual
+        override
+        ensure(deadline)
+        returns (uint256 tokens)
+    {
         address underlying = IPoolToken(poolToken).underlying();
         if (isStakedLPToken(underlying)) {
             address uniswapV2Pair = IStakedLPToken01(underlying).underlying();
@@ -92,15 +101,17 @@ contract Router03 is IRouter02, IImpermaxCallee {
         }
     }
 
-    /*** Redeem ***/
+    /**
+     * Redeem **
+     */
 
-    function redeem(
-        address poolToken,
-        uint tokens,
-        address to,
-        uint deadline,
-        bytes memory permitData
-    ) public virtual override ensure(deadline) returns (uint amount) {
+    function redeem(address poolToken, uint256 tokens, address to, uint256 deadline, bytes memory permitData)
+        public
+        virtual
+        override
+        ensure(deadline)
+        returns (uint256 amount)
+    {
         _permit(poolToken, tokens, deadline, permitData);
         IPoolToken(poolToken).transferFrom(msg.sender, poolToken, tokens);
         address underlying = IPoolToken(poolToken).underlying();
@@ -111,13 +122,15 @@ contract Router03 is IRouter02, IImpermaxCallee {
             return IPoolToken(poolToken).redeem(to);
         }
     }
-    function redeemETH(
-        address poolToken,
-        uint tokens,
-        address to,
-        uint deadline,
-        bytes memory permitData
-    ) public virtual override ensure(deadline) checkETH(poolToken) returns (uint amountETH) {
+
+    function redeemETH(address poolToken, uint256 tokens, address to, uint256 deadline, bytes memory permitData)
+        public
+        virtual
+        override
+        ensure(deadline)
+        checkETH(poolToken)
+        returns (uint256 amountETH)
+    {
         _permit(poolToken, tokens, deadline, permitData);
         IPoolToken(poolToken).transferFrom(msg.sender, poolToken, tokens);
         amountETH = IPoolToken(poolToken).redeem(address(this));
@@ -125,56 +138,67 @@ contract Router03 is IRouter02, IImpermaxCallee {
         TransferHelper.safeTransferETH(to, amountETH);
     }
 
-    /*** Borrow ***/
+    /**
+     * Borrow **
+     */
 
-    function borrow(
-        address borrowable,
-        uint amount,
-        address to,
-        uint deadline,
-        bytes memory permitData
-    ) public virtual override ensure(deadline) {
+    function borrow(address borrowable, uint256 amount, address to, uint256 deadline, bytes memory permitData)
+        public
+        virtual
+        override
+        ensure(deadline)
+    {
         _borrowPermit(borrowable, amount, deadline, permitData);
         IBorrowable(borrowable).borrow(msg.sender, to, amount, new bytes(0));
     }
-    function borrowETH(
-        address borrowable,
-        uint amountETH,
-        address to,
-        uint deadline,
-        bytes memory permitData
-    ) public virtual override ensure(deadline) checkETH(borrowable) {
+
+    function borrowETH(address borrowable, uint256 amountETH, address to, uint256 deadline, bytes memory permitData)
+        public
+        virtual
+        override
+        ensure(deadline)
+        checkETH(borrowable)
+    {
         borrow(borrowable, amountETH, address(this), deadline, permitData);
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
 
-    /*** Repay ***/
+    /**
+     * Repay **
+     */
 
-    function _repayAmount(
-        address borrowable,
-        uint amountMax,
-        address borrower
-    ) internal virtual returns (uint amount) {
+    function _repayAmount(address borrowable, uint256 amountMax, address borrower)
+        internal
+        virtual
+        returns (uint256 amount)
+    {
         IBorrowable(borrowable).accrueInterest();
-        uint borrowedAmount = IBorrowable(borrowable).borrowBalance(borrower);
+        uint256 borrowedAmount = IBorrowable(borrowable).borrowBalance(borrower);
         amount = amountMax < borrowedAmount ? amountMax : borrowedAmount;
     }
-    function repay(
-        address borrowable,
-        uint amountMax,
-        address borrower,
-        uint deadline
-    ) external virtual override ensure(deadline) returns (uint amount) {
+
+    function repay(address borrowable, uint256 amountMax, address borrower, uint256 deadline)
+        external
+        virtual
+        override
+        ensure(deadline)
+        returns (uint256 amount)
+    {
         amount = _repayAmount(borrowable, amountMax, borrower);
         TransferHelper.safeTransferFrom(IBorrowable(borrowable).underlying(), msg.sender, borrowable, amount);
         IBorrowable(borrowable).borrow(borrower, address(0), 0, new bytes(0));
     }
-    function repayETH(
-        address borrowable,
-        address borrower,
-        uint deadline
-    ) external virtual override payable ensure(deadline) checkETH(borrowable) returns (uint amountETH) {
+
+    function repayETH(address borrowable, address borrower, uint256 deadline)
+        external
+        payable
+        virtual
+        override
+        ensure(deadline)
+        checkETH(borrowable)
+        returns (uint256 amountETH)
+    {
         amountETH = _repayAmount(borrowable, msg.value, borrower);
         IWETH(WETH).deposit{value: amountETH}();
         assert(IWETH(WETH).transfer(borrowable, amountETH));
@@ -183,25 +207,31 @@ contract Router03 is IRouter02, IImpermaxCallee {
         if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);
     }
 
-    /*** Liquidate ***/
+    /**
+     * Liquidate **
+     */
 
-    function liquidate(
-        address borrowable,
-        uint amountMax,
-        address borrower,
-        address to,
-        uint deadline
-    ) external virtual override ensure(deadline) returns (uint amount, uint seizeTokens) {
+    function liquidate(address borrowable, uint256 amountMax, address borrower, address to, uint256 deadline)
+        external
+        virtual
+        override
+        ensure(deadline)
+        returns (uint256 amount, uint256 seizeTokens)
+    {
         amount = _repayAmount(borrowable, amountMax, borrower);
         TransferHelper.safeTransferFrom(IBorrowable(borrowable).underlying(), msg.sender, borrowable, amount);
         seizeTokens = IBorrowable(borrowable).liquidate(borrower, to);
     }
-    function liquidateETH(
-        address borrowable,
-        address borrower,
-        address to,
-        uint deadline
-    ) external virtual override payable ensure(deadline) checkETH(borrowable) returns (uint amountETH, uint seizeTokens) {
+
+    function liquidateETH(address borrowable, address borrower, address to, uint256 deadline)
+        external
+        payable
+        virtual
+        override
+        ensure(deadline)
+        checkETH(borrowable)
+        returns (uint256 amountETH, uint256 seizeTokens)
+    {
         amountETH = _repayAmount(borrowable, msg.value, borrower);
         IWETH(WETH).deposit{value: amountETH}();
         assert(IWETH(WETH).transfer(borrowable, amountETH));
@@ -210,65 +240,61 @@ contract Router03 is IRouter02, IImpermaxCallee {
         if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);
     }
 
-    /*** Leverage LP Token ***/
+    /**
+     * Leverage LP Token **
+     */
 
-    function _leverage(
-        address underlying,
-        uint amountA,
-        uint amountB,
-        address to
-    ) internal virtual {
+    function _leverage(address underlying, uint256 amountA, uint256 amountB, address to) internal virtual {
         address borrowableA = getBorrowable(underlying, 0);
         // mint collateral
-        bytes memory borrowBData = abi.encode(CalleeData({
-        callType: CallType.ADD_LIQUIDITY_AND_MINT,
-        underlying: underlying,
-        borrowableIndex: 1,
-        data: abi.encode(AddLiquidityAndMintCalldata({
-        amountA: amountA,
-        amountB: amountB,
-        to: to
-        }))
-        }));
+        bytes memory borrowBData = abi.encode(
+            CalleeData({
+                callType: CallType.ADD_LIQUIDITY_AND_MINT,
+                underlying: underlying,
+                borrowableIndex: 1,
+                data: abi.encode(AddLiquidityAndMintCalldata({amountA: amountA, amountB: amountB, to: to}))
+            })
+        );
         // borrow borrowableB
-        bytes memory borrowAData = abi.encode(CalleeData({
-        callType: CallType.BORROWB,
-        underlying: underlying,
-        borrowableIndex: 0,
-        data: abi.encode(BorrowBCalldata({
-        borrower: msg.sender,
-        receiver: address(this),
-        borrowAmount: amountB,
-        data: borrowBData
-        }))
-        }));
+        bytes memory borrowAData = abi.encode(
+            CalleeData({
+                callType: CallType.BORROWB,
+                underlying: underlying,
+                borrowableIndex: 0,
+                data: abi.encode(
+                    BorrowBCalldata({
+                        borrower: msg.sender,
+                        receiver: address(this),
+                        borrowAmount: amountB,
+                        data: borrowBData
+                    })
+                    )
+            })
+        );
         // borrow borrowableA
         IBorrowable(borrowableA).borrow(msg.sender, address(this), amountA, borrowAData);
     }
+
     function leverage(
         address underlying,
-        uint amountADesired,
-        uint amountBDesired,
-        uint amountAMin,
-        uint amountBMin,
+        uint256 amountADesired,
+        uint256 amountBDesired,
+        uint256 amountAMin,
+        uint256 amountBMin,
         address to,
-        uint deadline,
+        uint256 deadline,
         bytes calldata permitDataA,
         bytes calldata permitDataB
     ) external virtual override ensure(deadline) {
         _borrowPermit(getBorrowable(underlying, 0), amountADesired, deadline, permitDataA);
         _borrowPermit(getBorrowable(underlying, 1), amountBDesired, deadline, permitDataB);
         address uniswapV2Pair = getUniswapV2Pair(underlying);
-        (uint amountA, uint amountB) = _optimalLiquidity(uniswapV2Pair, amountADesired, amountBDesired, amountAMin, amountBMin);
+        (uint256 amountA, uint256 amountB) =
+            _optimalLiquidity(uniswapV2Pair, amountADesired, amountBDesired, amountAMin, amountBMin);
         _leverage(underlying, amountA, amountB, to);
     }
 
-    function _addLiquidityAndMint(
-        address underlying,
-        uint amountA,
-        uint amountB,
-        address to
-    ) internal virtual {
+    function _addLiquidityAndMint(address underlying, uint256 amountA, uint256 amountB, address to) internal virtual {
         (address collateral, address borrowableA, address borrowableB) = getLendingPool(underlying);
         address uniswapV2Pair = getUniswapV2Pair(underlying);
         // add liquidity to uniswap pair
@@ -281,33 +307,39 @@ contract Router03 is IRouter02, IImpermaxCallee {
         ICollateral(collateral).mint(to);
     }
 
-    /*** Deleverage LP Token ***/
+    /**
+     * Deleverage LP Token **
+     */
 
     function deleverage(
         address underlying,
-        uint redeemTokens,
-        uint amountAMin,
-        uint amountBMin,
-        uint deadline,
+        uint256 redeemTokens,
+        uint256 amountAMin,
+        uint256 amountBMin,
+        uint256 deadline,
         bytes calldata permitData
     ) external virtual override ensure(deadline) {
         address collateral = getCollateral(underlying);
-        uint exchangeRate = ICollateral(collateral).exchangeRate();
+        uint256 exchangeRate = ICollateral(collateral).exchangeRate();
         require(redeemTokens > 0, "ImpermaxRouter: REDEEM_ZERO");
-        uint redeemAmount = (redeemTokens - 1).mul(exchangeRate).div(1e18);
+        uint256 redeemAmount = (redeemTokens - 1).mul(exchangeRate).div(1e18);
         _permit(collateral, redeemTokens, deadline, permitData);
-        bytes memory redeemData = abi.encode(CalleeData({
-        callType: CallType.REMOVE_LIQ_AND_REPAY,
-        underlying: underlying,
-        borrowableIndex: 0,
-        data: abi.encode(RemoveLiqAndRepayCalldata({
-        borrower: msg.sender,
-        redeemTokens: redeemTokens,
-        redeemAmount: redeemAmount,
-        amountAMin: amountAMin,
-        amountBMin: amountBMin
-        }))
-        }));
+        bytes memory redeemData = abi.encode(
+            CalleeData({
+                callType: CallType.REMOVE_LIQ_AND_REPAY,
+                underlying: underlying,
+                borrowableIndex: 0,
+                data: abi.encode(
+                    RemoveLiqAndRepayCalldata({
+                        borrower: msg.sender,
+                        redeemTokens: redeemTokens,
+                        redeemAmount: redeemAmount,
+                        amountAMin: amountAMin,
+                        amountBMin: amountBMin
+                    })
+                    )
+            })
+        );
         // flashRedeem
         ICollateral(collateral).flashRedeem(address(this), redeemAmount, redeemData);
     }
@@ -315,10 +347,10 @@ contract Router03 is IRouter02, IImpermaxCallee {
     function _removeLiqAndRepay(
         address underlying,
         address borrower,
-        uint redeemTokens,
-        uint redeemAmount,
-        uint amountAMin,
-        uint amountBMin
+        uint256 redeemTokens,
+        uint256 redeemAmount,
+        uint256 amountAMin,
+        uint256 amountBMin
     ) internal virtual {
         (address collateral, address borrowableA, address borrowableB) = getLendingPool(underlying);
         address tokenA = IBorrowable(borrowableA).underlying();
@@ -328,7 +360,7 @@ contract Router03 is IRouter02, IImpermaxCallee {
         IUniswapV2Pair(underlying).transfer(underlying, redeemAmount);
         //TransferHelper.safeTransfer(underlying, underlying, redeemAmount);
         if (isStakedLPToken(underlying)) IStakedLPToken01(underlying).redeem(uniswapV2Pair);
-        (uint amountAMax, uint amountBMax) = IUniswapV2Pair(uniswapV2Pair).burn(address(this));
+        (uint256 amountAMax, uint256 amountBMax) = IUniswapV2Pair(uniswapV2Pair).burn(address(this));
         require(amountAMax >= amountAMin, "ImpermaxRouter: INSUFFICIENT_A_AMOUNT");
         require(amountBMax >= amountBMin, "ImpermaxRouter: INSUFFICIENT_B_AMOUNT");
         // repay and refund
@@ -338,57 +370,68 @@ contract Router03 is IRouter02, IImpermaxCallee {
         ICollateral(collateral).transferFrom(borrower, collateral, redeemTokens);
     }
 
-    function _repayAndRefund(
-        address borrowable,
-        address token,
-        address borrower,
-        uint amountMax
-    ) internal virtual {
+    function _repayAndRefund(address borrowable, address token, address borrower, uint256 amountMax) internal virtual {
         //repay
-        uint amount = _repayAmount(borrowable, amountMax, borrower);
+        uint256 amount = _repayAmount(borrowable, amountMax, borrower);
         TransferHelper.safeTransfer(token, borrowable, amount);
         IBorrowable(borrowable).borrow(borrower, address(0), 0, new bytes(0));
         // refund excess
         if (amountMax > amount) {
-            uint refundAmount = amountMax - amount;
+            uint256 refundAmount = amountMax - amount;
             if (token == WETH) {
                 IWETH(WETH).withdraw(refundAmount);
                 TransferHelper.safeTransferETH(borrower, refundAmount);
+            } else {
+                TransferHelper.safeTransfer(token, borrower, refundAmount);
             }
-            else TransferHelper.safeTransfer(token, borrower, refundAmount);
         }
     }
 
-    /*** Impermax Callee ***/
+    /**
+     * Impermax Callee **
+     */
 
-    enum CallType {ADD_LIQUIDITY_AND_MINT, BORROWB, REMOVE_LIQ_AND_REPAY}
+    enum CallType {
+        ADD_LIQUIDITY_AND_MINT,
+        BORROWB,
+        REMOVE_LIQ_AND_REPAY
+    }
+
     struct CalleeData {
         CallType callType;
         address underlying;
         uint8 borrowableIndex;
         bytes data;
     }
+
     struct AddLiquidityAndMintCalldata {
-        uint amountA;
-        uint amountB;
+        uint256 amountA;
+        uint256 amountB;
         address to;
     }
+
     struct BorrowBCalldata {
         address borrower;
         address receiver;
-        uint borrowAmount;
+        uint256 borrowAmount;
         bytes data;
     }
+
     struct RemoveLiqAndRepayCalldata {
         address borrower;
-        uint redeemTokens;
-        uint redeemAmount;
-        uint amountAMin;
-        uint amountBMin;
+        uint256 redeemTokens;
+        uint256 redeemAmount;
+        uint256 amountAMin;
+        uint256 amountBMin;
     }
 
-    function impermaxBorrow(address sender, address borrower, uint borrowAmount, bytes calldata data) external virtual override {
-        borrower; borrowAmount;
+    function impermaxBorrow(address sender, address borrower, uint256 borrowAmount, bytes calldata data)
+        external
+        virtual
+        override
+    {
+        borrower;
+        borrowAmount;
         CalleeData memory calleeData = abi.decode(data, (CalleeData));
         address declaredCaller = getBorrowable(calleeData.underlying, calleeData.borrowableIndex);
         // only succeeds if called by a borrowable and if that borrowable has been called by the router
@@ -397,16 +440,16 @@ contract Router03 is IRouter02, IImpermaxCallee {
         if (calleeData.callType == CallType.ADD_LIQUIDITY_AND_MINT) {
             AddLiquidityAndMintCalldata memory d = abi.decode(calleeData.data, (AddLiquidityAndMintCalldata));
             _addLiquidityAndMint(calleeData.underlying, d.amountA, d.amountB, d.to);
-        }
-        else if (calleeData.callType == CallType.BORROWB) {
+        } else if (calleeData.callType == CallType.BORROWB) {
             BorrowBCalldata memory d = abi.decode(calleeData.data, (BorrowBCalldata));
             address borrowableB = getBorrowable(calleeData.underlying, 1);
             IBorrowable(borrowableB).borrow(d.borrower, d.receiver, d.borrowAmount, d.data);
+        } else {
+            revert();
         }
-        else revert();
     }
 
-    function impermaxRedeem(address sender, uint redeemAmount, bytes calldata data) external virtual override {
+    function impermaxRedeem(address sender, uint256 redeemAmount, bytes calldata data) external virtual override {
         redeemAmount;
         CalleeData memory calleeData = abi.decode(data, (CalleeData));
         address declaredCaller = getCollateral(calleeData.underlying);
@@ -415,64 +458,64 @@ contract Router03 is IRouter02, IImpermaxCallee {
         require(msg.sender == declaredCaller, "ImpermaxRouter: UNAUTHORIZED_CALLER");
         if (calleeData.callType == CallType.REMOVE_LIQ_AND_REPAY) {
             RemoveLiqAndRepayCalldata memory d = abi.decode(calleeData.data, (RemoveLiqAndRepayCalldata));
-            _removeLiqAndRepay(calleeData.underlying, d.borrower, d.redeemTokens, d.redeemAmount, d.amountAMin, d.amountBMin);
+            _removeLiqAndRepay(
+                calleeData.underlying, d.borrower, d.redeemTokens, d.redeemAmount, d.amountAMin, d.amountBMin
+            );
+        } else {
+            revert();
         }
-        else revert();
     }
 
-    /*** Utilities ***/
+    /**
+     * Utilities **
+     */
 
-    function _permit(
-        address poolToken,
-        uint amount,
-        uint deadline,
-        bytes memory permitData
-    ) internal virtual {
+    function _permit(address poolToken, uint256 amount, uint256 deadline, bytes memory permitData) internal virtual {
         if (permitData.length == 0) return;
         (bool approveMax, uint8 v, bytes32 r, bytes32 s) = abi.decode(permitData, (bool, uint8, bytes32, bytes32));
-        uint value = approveMax ? uint(-1) : amount;
+        uint256 value = approveMax ? uint256(-1) : amount;
         IPoolToken(poolToken).permit(msg.sender, address(this), value, deadline, v, r, s);
     }
-    function _borrowPermit(
-        address borrowable,
-        uint amount,
-        uint deadline,
-        bytes memory permitData
-    ) internal virtual {
+
+    function _borrowPermit(address borrowable, uint256 amount, uint256 deadline, bytes memory permitData)
+        internal
+        virtual
+    {
         if (permitData.length == 0) return;
         (bool approveMax, uint8 v, bytes32 r, bytes32 s) = abi.decode(permitData, (bool, uint8, bytes32, bytes32));
-        uint value = approveMax ? uint(-1) : amount;
+        uint256 value = approveMax ? uint256(-1) : amount;
         IBorrowable(borrowable).borrowPermit(msg.sender, address(this), value, deadline, v, r, s);
     }
 
     function _optimalLiquidity(
         address uniswapV2Pair,
-        uint amountADesired,
-        uint amountBDesired,
-        uint amountAMin,
-        uint amountBMin
-    ) public virtual view returns (uint amountA, uint amountB) {
-        (uint reserveA, uint reserveB,) = IUniswapV2Pair(uniswapV2Pair).getReserves();
-        uint amountBOptimal = UniswapV2Library.quote(amountADesired, reserveA, reserveB);
+        uint256 amountADesired,
+        uint256 amountBDesired,
+        uint256 amountAMin,
+        uint256 amountBMin
+    ) public view virtual returns (uint256 amountA, uint256 amountB) {
+        (uint256 reserveA, uint256 reserveB,) = IUniswapV2Pair(uniswapV2Pair).getReserves();
+        uint256 amountBOptimal = UniswapV2Library.quote(amountADesired, reserveA, reserveB);
         if (amountBOptimal <= amountBDesired) {
             require(amountBOptimal >= amountBMin, "ImpermaxRouter: INSUFFICIENT_B_AMOUNT");
             (amountA, amountB) = (amountADesired, amountBOptimal);
         } else {
-            uint amountAOptimal = UniswapV2Library.quote(amountBDesired, reserveB, reserveA);
+            uint256 amountAOptimal = UniswapV2Library.quote(amountBDesired, reserveB, reserveA);
             assert(amountAOptimal <= amountADesired);
             require(amountAOptimal >= amountAMin, "ImpermaxRouter: INSUFFICIENT_A_AMOUNT");
             (amountA, amountB) = (amountAOptimal, amountBDesired);
         }
     }
 
-    function isStakedLPToken(address underlying) public virtual override view returns(bool) {
+    function isStakedLPToken(address underlying) public view virtual override returns (bool) {
         try IStakedLPToken01(underlying).isStakedLPToken() returns (bool result) {
             return result;
         } catch {
             return false;
         }
     }
-    function getUniswapV2Pair(address underlying) public virtual override view returns (address) {
+
+    function getUniswapV2Pair(address underlying) public view virtual override returns (address) {
         try IStakedLPToken01(underlying).underlying() returns (address u) {
             if (u != address(0)) return u;
             return underlying;
@@ -481,24 +524,44 @@ contract Router03 is IRouter02, IImpermaxCallee {
         }
     }
 
-    function getBorrowable(address underlying, uint8 index) public virtual override view returns (address borrowable) {
+    function getBorrowable(address underlying, uint8 index) public view virtual override returns (address borrowable) {
         require(index < 2, "ImpermaxRouter: INDEX_TOO_HIGH");
-        borrowable = address(uint(keccak256(abi.encodePacked(
-                hex"ff",
-                bDeployer,
-                keccak256(abi.encodePacked(factory, underlying, index)),
-                hex"605ba1db56496978613939baf0ae31dccceea3f5ca53dfaa76512bc880d7bb8f" // Borrowable bytecode keccak256
-            ))));
+        borrowable = address(
+            uint256(
+                keccak256(
+                    abi.encodePacked(
+                        hex"ff",
+                        bDeployer,
+                        keccak256(abi.encodePacked(factory, underlying, index)),
+                        hex"605ba1db56496978613939baf0ae31dccceea3f5ca53dfaa76512bc880d7bb8f" // Borrowable bytecode keccak256
+                    )
+                )
+            )
+        );
     }
-    function getCollateral(address underlying) public virtual override view returns (address collateral) {
-        collateral = address(uint(keccak256(abi.encodePacked(
-                hex"ff",
-                cDeployer,
-                keccak256(abi.encodePacked(factory, underlying)),
-                hex"4b8788d8761647e6330407671d3c6c80afaed3d047800dba0e0e3befde047767" // Collateral bytecode keccak256
-            ))));
+
+    function getCollateral(address underlying) public view virtual override returns (address collateral) {
+        collateral = address(
+            uint256(
+                keccak256(
+                    abi.encodePacked(
+                        hex"ff",
+                        cDeployer,
+                        keccak256(abi.encodePacked(factory, underlying)),
+                        hex"4b8788d8761647e6330407671d3c6c80afaed3d047800dba0e0e3befde047767" // Collateral bytecode keccak256
+                    )
+                )
+            )
+        );
     }
-    function getLendingPool(address underlying) public virtual override view returns (address collateral, address borrowableA, address borrowableB) {
+
+    function getLendingPool(address underlying)
+        public
+        view
+        virtual
+        override
+        returns (address collateral, address borrowableA, address borrowableB)
+    {
         collateral = getCollateral(underlying);
         borrowableA = getBorrowable(underlying, 0);
         borrowableB = getBorrowable(underlying, 1);
@@ -508,16 +571,19 @@ contract Router03 is IRouter02, IImpermaxCallee {
         address router,
         address tokenA,
         address tokenB,
-        uint amountADesired,
-        uint amountBDesired,
-        uint amountAMin,
-        uint amountBMin,
-        uint deadline,
+        uint256 amountADesired,
+        uint256 amountBDesired,
+        uint256 amountAMin,
+        uint256 amountBMin,
+        uint256 deadline,
         address poolToken,
         address to,
         bytes calldata permitData
-    ) external ensure(deadline) returns (uint tokens) {
+    ) external ensure(deadline) returns (uint256 tokens) {
         TransferHelper.safeTransferFrom(tokenA, msg.sender, address(this), amountADesired);
         TransferHelper.safeTransferFrom(tokenB, msg.sender, address(this), amountBDesired);
+        (uint256 amountA, uint256 amountB, uint256 liquidity) = IDexRouter(router).addLiquidity(
+            tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin, to, deadline
+        );
     }
 }
