@@ -18,6 +18,20 @@ import "./libraries/UniswapV2Library.sol";
 contract Router03 is IRouter02, IImpermaxCallee {
     using SafeMath for uint256;
 
+    struct addLiquidityAndMintCollateralParams {
+        address router;
+        address tokenA;
+        address tokenB;
+        uint256 amountADesired;
+        uint256 amountBDesired;
+        uint256 amountAMin;
+        uint256 amountBMin;
+        uint256 deadline;
+        address poolToken;
+        address to;
+        bytes permitData;
+    }
+
     address public immutable override factory;
     address public immutable override bDeployer;
     address public immutable override cDeployer;
@@ -567,23 +581,22 @@ contract Router03 is IRouter02, IImpermaxCallee {
         borrowableB = getBorrowable(underlying, 1);
     }
 
-    function addLiquidityAndMintCollateral(
-        address router,
-        address tokenA,
-        address tokenB,
-        uint256 amountADesired,
-        uint256 amountBDesired,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        uint256 deadline,
-        address poolToken,
-        address to,
-        bytes calldata permitData
-    ) external ensure(deadline) returns (uint256 tokens) {
-        TransferHelper.safeTransferFrom(tokenA, msg.sender, address(this), amountADesired);
-        TransferHelper.safeTransferFrom(tokenB, msg.sender, address(this), amountBDesired);
-        (uint256 amountA, uint256 amountB, uint256 liquidity) = IDexRouter(router).addLiquidity(
-            tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin, address(this), deadline
+    function addLiquidityAndMintCollateral(addLiquidityAndMintCollateralParams calldata params)
+        external
+        ensure(params.deadline)
+        returns (uint256 tokens)
+    {
+        TransferHelper.safeTransferFrom(params.tokenA, msg.sender, address(this), params.amountADesired);
+        TransferHelper.safeTransferFrom(params.tokenB, msg.sender, address(this), params.amountBDesired);
+        (uint256 amountA, uint256 amountB, uint256 liquidity) = IDexRouter(params.router).addLiquidity(
+            params.tokenA,
+            params.tokenB,
+            params.amountADesired,
+            params.amountBDesired,
+            params.amountAMin,
+            params.amountBMin,
+            address(this),
+            params.deadline
         );
     }
 
