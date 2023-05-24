@@ -503,4 +503,21 @@ contract Router03 is IRouter02, IImpermaxCallee {
         borrowableA = getBorrowable(underlying, 0);
         borrowableB = getBorrowable(underlying, 1);
     }
+
+    function addLiquidityAndMintCollateral(
+        address router,
+        address tokenA,
+        address tokenB,
+        uint amountADesired,
+        uint amountBDesired,
+        uint amountAMin,
+        uint amountBMin,
+        uint deadline,
+        address poolToken,
+        address to,
+        bytes calldata permitData
+    ) external ensure(deadline) returns (uint tokens) {
+        TransferHelper.safeTransferFrom(tokenA, msg.sender, address(this), amountADesired);
+        TransferHelper.safeTransferFrom(tokenB, msg.sender, address(this), amountBDesired);
+    }
 }
