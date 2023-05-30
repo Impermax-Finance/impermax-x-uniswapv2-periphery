@@ -10,6 +10,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-bignumber": "3.0.0",
+    "hardhat": "^2.14.0",
     "solparse": "^2.2.8"
   },
   "dependencies": {

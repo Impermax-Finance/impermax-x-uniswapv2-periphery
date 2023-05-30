@@ -10,3 +10,5 @@ yarn-error.log
 contracts/CapitalFreeLiquidate.sol
 contracts/interfaces/ICapitalFreeLiquidate.sol
 test/CapitalFreeLiquidate.js
+artifacts/
+cache/
