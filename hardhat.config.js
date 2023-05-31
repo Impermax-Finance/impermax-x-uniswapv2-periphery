@@ -7,4 +7,7 @@ module.exports = {
       },
     ],
   },
+  paths: {
+    tests: "./hardhat-tests"
+  }
 };
