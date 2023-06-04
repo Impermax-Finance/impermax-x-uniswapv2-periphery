@@ -37,10 +37,12 @@ describe("Router03 contract", function () {
     const x = await quickSwapRouterContract.addLiquidity(
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
       "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-      "1991837",
-      "2010263787060743761",
-      "1989845",
-      "2008253523273683017",
+      // Desired 199.18 USDT
+      "199183700",
+      // Desired 201.02 MAI
+      "201026378706074376100",
+      "198984500",
+      "200825352327368301700",
       USER,
       16858989410
     );
