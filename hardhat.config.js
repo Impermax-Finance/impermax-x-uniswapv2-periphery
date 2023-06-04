@@ -16,7 +16,7 @@ module.exports = {
     hardhat: {
       forking: {
         url: "https://polygon-mainnet.infura.io/v3/6e758ef5d39a4fdeba50de7d10d08448",
-        blockNumber: 43527008
+        blockNumber: 43526031
       }
     }
   },

@@ -5,6 +5,7 @@ const UNISWAPV2ROUTER02_ABI = require('./abis/UniswapV2Router02.json');
 
 const USDT_ADDRESS = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
 const MAI_ADDRESS = "0xa3fa99a148fa48d14ed51d610c367c61876997f1";
+const USDT_MAI_QUICKSWAP_LP_ADDRESS = "0xE89faE1B4AdA2c869f05a0C96C87022DaDC7709a";
 const USER = "0x459e213d8b5e79d706ab22b945e3af983d51bc4c";
 const QUICKSWAP_ROUTER = "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff";
 const MAX_UINT256 = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
@@ -33,21 +34,22 @@ describe("Router03 contract", function () {
     var quickSwapRouterContract = new ethers.Contract(QUICKSWAP_ROUTER, UNISWAPV2ROUTER02_ABI);
     quickSwapRouterContract = quickSwapRouterContract.connect(impersonatedUSER);
 
-    console.log(await USDTcontract.balanceOf(USER));
+    var LPcontract = new ethers.Contract(USDT_MAI_QUICKSWAP_LP_ADDRESS, ERC20_ABI);
+    LPcontract = LPcontract.connect(impersonatedUSER);
+
+    console.log(await LPcontract.balanceOf(USER));
     const x = await quickSwapRouterContract.addLiquidity(
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
       "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-      // Desired 199.18 USDT
-      "199183700",
-      // Desired 201.02 MAI
-      "201026378706074376100",
-      "198984500",
-      "200825352327368301700",
+      // Desired 1.991837 USDT
+      "1991837",
+      // Desired 2.0102 MAI
+      "2010263787060743761",
+      "1989845",
+      "2008253523273683017",
       USER,
       16858989410
     );
-    const txnReceipt = await x.wait();
-    // console.log(txnReceipt);
-    console.log(await USDTcontract.balanceOf(USER));
+    console.log(await LPcontract.balanceOf(USER));
   });
 });
