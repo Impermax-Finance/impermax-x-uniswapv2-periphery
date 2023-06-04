@@ -15,8 +15,8 @@ module.exports = {
   networks: {
     hardhat: {
       forking: {
-        url: "https://arbitrum-mainnet.infura.io/v3/6e758ef5d39a4fdeba50de7d10d08448",
-        blockNumber: 96406905
+        url: "https://polygon-mainnet.infura.io/v3/6e758ef5d39a4fdeba50de7d10d08448",
+        blockNumber: 43527008
       }
     }
   },
