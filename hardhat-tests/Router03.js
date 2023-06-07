@@ -10,6 +10,7 @@ const USDT_MAI_QUICKSWAP_LP_ADDRESS = "0xE89faE1B4AdA2c869f05a0C96C87022DaDC7709
 const ROUTER02_ADDRESS = "0x4e69cf49ff3af82efe304a3c723556efb7434736";
 const USER = "0x459e213d8b5e79d706ab22b945e3af983d51bc4c";
 const QUICKSWAP_ROUTER = "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff";
+const IMPERMAX_COLLATERAL_ADDRESS = "0xa1af6582303d3E42bD19c43dE9D0065a4153aF7B";
 
 describe.only("Router03 contract", function () {
   // USER (0x459...) already has USDT and MAI in their account. They have already given USDT & MAI token approval
@@ -25,7 +26,7 @@ describe.only("Router03 contract", function () {
     LPcontract = LPcontract.connect(impersonatedUSER);
 
     console.log(await LPcontract.balanceOf(USER));
-    const x = await quickSwapRouterContract.addLiquidity(
+    await quickSwapRouterContract.addLiquidity(
       USDT_ADDRESS,
       MAI_ADDRESS,
       // Desired 1.991837 USDT
@@ -41,5 +42,15 @@ describe.only("Router03 contract", function () {
 
     var router02Contract = new ethers.Contract(ROUTER02_ADDRESS, ROUTER02_ABI);
     router02Contract = router02Contract.connect(impersonatedUSER);
+    await router02Contract.mintCollateral(
+      "0xa1af6582303d3E42bD19c43dE9D0065a4153aF7B",
+      "10825200000",
+      "0x459e213D8B5E79d706aB22b945e3aF983d51BC4C",
+      "1717434469",
+      "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c986d4a10c0b996d554349e9b62fddddfe0be9f2c2f1956db5fa57ced8a81c80f7c2cd61461895a95c6f0399c3082b29383be8ee5ef8887586177517d4cbf10da"
+    );
+    const impermaxCollateralContract = new ethers.Contract(IMPERMAX_COLLATERAL_ADDRESS, ERC20_ABI).connect(impersonatedUSER);
+    console.log(await impermaxCollateralContract.balanceOf(USER));
+
   });
 });
