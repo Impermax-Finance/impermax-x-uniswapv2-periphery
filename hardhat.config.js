@@ -1,5 +1,6 @@
 /** @type import('hardhat/config').HardhatUserConfig */
 require("@nomicfoundation/hardhat-toolbox");
+require("hardhat-contract-sizer");
 
 module.exports = {
   solidity: {
@@ -8,6 +9,12 @@ module.exports = {
         version: "0.6.6",
       },
     ],
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 999999,
+      },
+    },
   },
   paths: {
     tests: "./hardhat-tests"
