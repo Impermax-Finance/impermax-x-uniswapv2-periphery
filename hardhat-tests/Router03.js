@@ -40,6 +40,8 @@ describe.only("Router03 contract", function () {
     );
     console.log(await LPcontract.balanceOf(USER));
 
+    const impermaxCollateralContract = new ethers.Contract(IMPERMAX_COLLATERAL_ADDRESS, ERC20_ABI).connect(impersonatedUSER);
+    console.log(await impermaxCollateralContract.balanceOf(USER));
     var router02Contract = new ethers.Contract(ROUTER02_ADDRESS, ROUTER02_ABI);
     router02Contract = router02Contract.connect(impersonatedUSER);
     await router02Contract.mintCollateral(
@@ -49,8 +51,19 @@ describe.only("Router03 contract", function () {
       "1717434469",
       "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c986d4a10c0b996d554349e9b62fddddfe0be9f2c2f1956db5fa57ced8a81c80f7c2cd61461895a95c6f0399c3082b29383be8ee5ef8887586177517d4cbf10da"
     );
-    const impermaxCollateralContract = new ethers.Contract(IMPERMAX_COLLATERAL_ADDRESS, ERC20_ABI).connect(impersonatedUSER);
+    // const impermaxCollateralContract = new ethers.Contract(IMPERMAX_COLLATERAL_ADDRESS, ERC20_ABI).connect(impersonatedUSER);
     console.log(await impermaxCollateralContract.balanceOf(USER));
 
   });
+
+  it.only("addLiquidityAndMintCollateral", async function () {
+    const impersonatedUSER = await ethers.getImpersonatedSigner(USER);
+    const Router02 = await ethers.getContractFactory("Router02");
+    const router03 = await Router02.deploy(
+      "0x7f7ad5b16c97aa9c2b0447c2676ce7d5cefebcd3",
+      "0x4e69cf49ff3af82efe304a3c723556efb7434736",
+      "0xe63fd1e5784f8c736ee2a48904e73b225d210484",
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"
+    );
+  })
 });
