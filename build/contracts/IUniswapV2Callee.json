@@ -32,25 +32,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount0\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount1\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"uniswapV2Call\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/univ2-core/interfaces/IUniswapV2Callee.sol\":\"IUniswapV2Callee\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/univ2-core/interfaces/IUniswapV2Callee.sol\":{\"keccak256\":\"0xdb17a1fb73e261e736ae8862be2d9a32964fc4b3741f48980f5cdc9d92b99a96\",\"urls\":[\"bzz-raw://468dab23a95d9d9b7d6ce74008d45eef3de2f137ede604e6be6c5e7d0121c5e9\",\"dweb:/ipfs/QmcXwjTfp6tCRgf1KsNQyUAtrqKhiaN6fbaHVGr22eficP\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount0\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount1\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"uniswapV2Call\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/uniswap-v2-core/interfaces/IUniswapV2Callee.sol\":\"IUniswapV2Callee\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/uniswap-v2-core/interfaces/IUniswapV2Callee.sol\":{\"keccak256\":\"0xdb17a1fb73e261e736ae8862be2d9a32964fc4b3741f48980f5cdc9d92b99a96\",\"urls\":[\"bzz-raw://468dab23a95d9d9b7d6ce74008d45eef3de2f137ede604e6be6c5e7d0121c5e9\",\"dweb:/ipfs/QmcXwjTfp6tCRgf1KsNQyUAtrqKhiaN6fbaHVGr22eficP\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity >=0.5.0;\n\ninterface IUniswapV2Callee {\n    function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;\n}\n",
-  "sourcePath": "C:\\Users\\simor\\Desktop\\impermax-x-uniswapv2-periphery\\test\\Contracts\\univ2-core\\interfaces\\IUniswapV2Callee.sol",
+  "sourcePath": "C:\\Users\\simor\\Desktop\\impermax-x-uniswapv2-periphery\\test\\Contracts\\uniswap-v2-core\\interfaces\\IUniswapV2Callee.sol",
   "ast": {
-    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/univ2-core/interfaces/IUniswapV2Callee.sol",
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/uniswap-v2-core/interfaces/IUniswapV2Callee.sol",
     "exportedSymbols": {
       "IUniswapV2Callee": [
-        14382
+        15308
       ]
     },
-    "id": 14383,
+    "id": 15309,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 14370,
+        "id": 15296,
         "literals": [
           "solidity",
           ">=",
@@ -58,7 +58,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:52"
+        "src": "0:24:57"
       },
       {
         "baseContracts": [],
@@ -66,9 +66,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 14382,
+        "id": 15308,
         "linearizedBaseContracts": [
-          14382
+          15308
         ],
         "name": "IUniswapV2Callee",
         "nodeType": "ContractDefinition",
@@ -76,23 +76,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 14381,
+            "id": 15307,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "uniswapV2Call",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 14379,
+              "id": 15305,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 14372,
+                  "id": 15298,
                   "name": "sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "82:14:52",
+                  "scope": 15307,
+                  "src": "82:14:57",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -100,10 +100,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 14371,
+                    "id": 15297,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "82:7:52",
+                    "src": "82:7:57",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -115,11 +115,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 14374,
+                  "id": 15300,
                   "name": "amount0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "98:12:52",
+                  "scope": 15307,
+                  "src": "98:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -127,10 +127,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 14373,
+                    "id": 15299,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "98:4:52",
+                    "src": "98:4:57",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -141,11 +141,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 14376,
+                  "id": 15302,
                   "name": "amount1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "112:12:52",
+                  "scope": 15307,
+                  "src": "112:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -153,10 +153,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 14375,
+                    "id": 15301,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "112:4:52",
+                    "src": "112:4:57",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -167,11 +167,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 14378,
+                  "id": 15304,
                   "name": "data",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "126:19:52",
+                  "scope": 15307,
+                  "src": "126:19:57",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -179,10 +179,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 14377,
+                    "id": 15303,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "126:5:52",
+                    "src": "126:5:57",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -192,39 +192,39 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "81:65:52"
+              "src": "81:65:57"
             },
             "returnParameters": {
-              "id": 14380,
+              "id": 15306,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "155:0:52"
+              "src": "155:0:57"
             },
-            "scope": 14382,
-            "src": "59:97:52",
+            "scope": 15308,
+            "src": "59:97:57",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 14383,
-        "src": "26:132:52"
+        "scope": 15309,
+        "src": "26:132:57"
       }
     ],
-    "src": "0:159:52"
+    "src": "0:159:57"
   },
   "legacyAST": {
-    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/univ2-core/interfaces/IUniswapV2Callee.sol",
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/uniswap-v2-core/interfaces/IUniswapV2Callee.sol",
     "exportedSymbols": {
       "IUniswapV2Callee": [
-        14382
+        15308
       ]
     },
-    "id": 14383,
+    "id": 15309,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 14370,
+        "id": 15296,
         "literals": [
           "solidity",
           ">=",
@@ -232,7 +232,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:52"
+        "src": "0:24:57"
       },
       {
         "baseContracts": [],
@@ -240,9 +240,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 14382,
+        "id": 15308,
         "linearizedBaseContracts": [
-          14382
+          15308
         ],
         "name": "IUniswapV2Callee",
         "nodeType": "ContractDefinition",
@@ -250,23 +250,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 14381,
+            "id": 15307,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "uniswapV2Call",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 14379,
+              "id": 15305,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 14372,
+                  "id": 15298,
                   "name": "sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "82:14:52",
+                  "scope": 15307,
+                  "src": "82:14:57",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -274,10 +274,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 14371,
+                    "id": 15297,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "82:7:52",
+                    "src": "82:7:57",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -289,11 +289,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 14374,
+                  "id": 15300,
                   "name": "amount0",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "98:12:52",
+                  "scope": 15307,
+                  "src": "98:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -301,10 +301,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 14373,
+                    "id": 15299,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "98:4:52",
+                    "src": "98:4:57",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -315,11 +315,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 14376,
+                  "id": 15302,
                   "name": "amount1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "112:12:52",
+                  "scope": 15307,
+                  "src": "112:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -327,10 +327,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 14375,
+                    "id": 15301,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "112:4:52",
+                    "src": "112:4:57",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -341,11 +341,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 14378,
+                  "id": 15304,
                   "name": "data",
                   "nodeType": "VariableDeclaration",
-                  "scope": 14381,
-                  "src": "126:19:52",
+                  "scope": 15307,
+                  "src": "126:19:57",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -353,10 +353,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 14377,
+                    "id": 15303,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "126:5:52",
+                    "src": "126:5:57",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -366,26 +366,26 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "81:65:52"
+              "src": "81:65:57"
             },
             "returnParameters": {
-              "id": 14380,
+              "id": 15306,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "155:0:52"
+              "src": "155:0:57"
             },
-            "scope": 14382,
-            "src": "59:97:52",
+            "scope": 15308,
+            "src": "59:97:57",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 14383,
-        "src": "26:132:52"
+        "scope": 15309,
+        "src": "26:132:57"
       }
     ],
-    "src": "0:159:52"
+    "src": "0:159:57"
   },
   "compiler": {
     "name": "solc",
@@ -393,7 +393,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-05-22T10:32:51.152Z",
+  "updatedAt": "2021-05-26T17:31:39.117Z",
   "devdoc": {
     "methods": {}
   },

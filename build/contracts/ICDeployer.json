@@ -23,25 +23,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"uniswapV2Pair\",\"type\":\"address\"}],\"name\":\"deployCollateral\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"collateral\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/ICDeployer.sol\":\"ICDeployer\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/ICDeployer.sol\":{\"keccak256\":\"0x5bd521171c6ef60b554d88475d14fd55b3862a3e42e663434dce7c0a625d15dc\",\"urls\":[\"bzz-raw://a6cf5482d61f77ff6a1ca7974baa006b525e18d646ad766bed232ed420d88db3\",\"dweb:/ipfs/QmX9gUoD3V1fF2PyYsEXCyWxhmHEi6wcSbBpPvUgvSK9Zz\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"uniswapV2Pair\",\"type\":\"address\"}],\"name\":\"deployCollateral\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"collateral\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/impermax-x-uniswapv2-core/interfaces/ICDeployer.sol\":\"ICDeployer\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":999999},\"remappings\":[]},\"sources\":{\"/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/impermax-x-uniswapv2-core/interfaces/ICDeployer.sol\":{\"keccak256\":\"0x5bd521171c6ef60b554d88475d14fd55b3862a3e42e663434dce7c0a625d15dc\",\"urls\":[\"bzz-raw://a6cf5482d61f77ff6a1ca7974baa006b525e18d646ad766bed232ed420d88db3\",\"dweb:/ipfs/QmX9gUoD3V1fF2PyYsEXCyWxhmHEi6wcSbBpPvUgvSK9Zz\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity >=0.5.0;\r\n\r\ninterface ICDeployer {\r\n\tfunction deployCollateral(address uniswapV2Pair) external returns (address collateral);\r\n}",
-  "sourcePath": "C:\\Users\\simor\\Desktop\\impermax-x-uniswapv2-periphery\\test\\Contracts\\imx-univ2-core\\interfaces\\ICDeployer.sol",
+  "sourcePath": "C:\\Users\\simor\\Desktop\\impermax-x-uniswapv2-periphery\\test\\Contracts\\impermax-x-uniswapv2-core\\interfaces\\ICDeployer.sol",
   "ast": {
-    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/ICDeployer.sol",
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/impermax-x-uniswapv2-core/interfaces/ICDeployer.sol",
     "exportedSymbols": {
       "ICDeployer": [
-        6308
+        5338
       ]
     },
-    "id": 6309,
+    "id": 5339,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6300,
+        "id": 5330,
         "literals": [
           "solidity",
           ">=",
@@ -49,7 +49,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:22"
+        "src": "0:24:20"
       },
       {
         "baseContracts": [],
@@ -57,9 +57,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6308,
+        "id": 5338,
         "linearizedBaseContracts": [
-          6308
+          5338
         ],
         "name": "ICDeployer",
         "nodeType": "ContractDefinition",
@@ -67,23 +67,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 6307,
+            "id": 5337,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "deployCollateral",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6303,
+              "id": 5333,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6302,
+                  "id": 5332,
                   "name": "uniswapV2Pair",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6307,
-                  "src": "79:21:22",
+                  "scope": 5337,
+                  "src": "79:21:20",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -91,10 +91,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6301,
+                    "id": 5331,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "79:7:22",
+                    "src": "79:7:20",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -105,19 +105,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "78:23:22"
+              "src": "78:23:20"
             },
             "returnParameters": {
-              "id": 6306,
+              "id": 5336,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6305,
+                  "id": 5335,
                   "name": "collateral",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6307,
-                  "src": "120:18:22",
+                  "scope": 5337,
+                  "src": "120:18:20",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -125,10 +125,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6304,
+                    "id": 5334,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "120:7:22",
+                    "src": "120:7:20",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -139,33 +139,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "119:20:22"
+              "src": "119:20:20"
             },
-            "scope": 6308,
-            "src": "53:87:22",
+            "scope": 5338,
+            "src": "53:87:20",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 6309,
-        "src": "28:115:22"
+        "scope": 5339,
+        "src": "28:115:20"
       }
     ],
-    "src": "0:143:22"
+    "src": "0:143:20"
   },
   "legacyAST": {
-    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/imx-univ2-core/interfaces/ICDeployer.sol",
+    "absolutePath": "/C/Users/simor/Desktop/impermax-x-uniswapv2-periphery/test/Contracts/impermax-x-uniswapv2-core/interfaces/ICDeployer.sol",
     "exportedSymbols": {
       "ICDeployer": [
-        6308
+        5338
       ]
     },
-    "id": 6309,
+    "id": 5339,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6300,
+        "id": 5330,
         "literals": [
           "solidity",
           ">=",
@@ -173,7 +173,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:22"
+        "src": "0:24:20"
       },
       {
         "baseContracts": [],
@@ -181,9 +181,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 6308,
+        "id": 5338,
         "linearizedBaseContracts": [
-          6308
+          5338
         ],
         "name": "ICDeployer",
         "nodeType": "ContractDefinition",
@@ -191,23 +191,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 6307,
+            "id": 5337,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "deployCollateral",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6303,
+              "id": 5333,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6302,
+                  "id": 5332,
                   "name": "uniswapV2Pair",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6307,
-                  "src": "79:21:22",
+                  "scope": 5337,
+                  "src": "79:21:20",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -215,10 +215,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6301,
+                    "id": 5331,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "79:7:22",
+                    "src": "79:7:20",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -229,19 +229,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "78:23:22"
+              "src": "78:23:20"
             },
             "returnParameters": {
-              "id": 6306,
+              "id": 5336,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 6305,
+                  "id": 5335,
                   "name": "collateral",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6307,
-                  "src": "120:18:22",
+                  "scope": 5337,
+                  "src": "120:18:20",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -249,10 +249,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 6304,
+                    "id": 5334,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "120:7:22",
+                    "src": "120:7:20",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -263,20 +263,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "119:20:22"
+              "src": "119:20:20"
             },
-            "scope": 6308,
-            "src": "53:87:22",
+            "scope": 5338,
+            "src": "53:87:20",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 6309,
-        "src": "28:115:22"
+        "scope": 5339,
+        "src": "28:115:20"
       }
     ],
-    "src": "0:143:22"
+    "src": "0:143:20"
   },
   "compiler": {
     "name": "solc",
@@ -284,7 +284,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.2",
-  "updatedAt": "2021-05-22T10:32:51.080Z",
+  "updatedAt": "2021-05-26T17:31:38.900Z",
   "devdoc": {
     "methods": {}
   },
